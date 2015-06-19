@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="euc-kr" />
+<title>More than chocolate</title>
+<meta name="viewport" content="user-scalable=no, initial-scale=0.5, maximum-scale=0.5, minimum-scale=0.5, width=device-width, height=device-height">
+<meta name="format-detection" content="telephone=no, address=no, email=no" />
+ <meta name="keyword" content="초콜릿" /> 
+<meta name="discription" content="초콜릿" />
+
+<meta http-equiv="imagetoolbar" content="no" />
+<meta http-equiv="Expires" content="0" />
+<meta http-equiv="Cache-Control" content="No-Cache" />
+<meta http-equiv="Pragma" content="no-cache" />
+<script src="../js/jquery-1.7.2.min.js"></script>
+<link rel="stylesheet" href="../css/m_main.css?cs=1212" type="text/css"/>
+<script src="../js/jquery.BxSlider.min.js"></script>
+
+<script type="text/javascript" src="../js/m_common.js"></script>
+<script type="text/javascript" >
+var slider;
+var shop_idx = -1;
+
+$(document).ready(function(){
+	
+	// 슬라이드
+	slideInit();
+	
+	$('.slide_close_btn img').click(function(){
+		var idx = $('.slide_close_btn img').index(this);
+		$('.review_cont').eq(idx).slideUp(300);
+	});
+	
+	$('.shop_menu').click(function(){		
+		if(shop_idx != -1){
+			$('.review_cont').eq(idx).slideUp('fast');
+		}
+		
+		var idx = $('.shop_menu').index(this);
+		
+		var content = $('div.review_cont').eq(idx);
+		
+		if(content.hasClass('open')){
+			content.slideUp(300, function(){
+				content.removeClass('open');
+			})
+			
+			$(this).next('div.review_cont').find('.slide_btn').hide();
+			$(this).next('div.review_cont').find('.slide_close_btn').hide();
+			
+		}else{
+			$('div.review_cont.open').slideUp(300, function(){
+				$('div.review_cont.open').removeClass('open');
+			});
+			
+			content.slideDown(300, function(){
+				content.addClass('open');
+			})
+			
+			content.find('.slide_close_btn').show();
+			content.find('.slide_btn').show();
+		}	
+	});
+});
+
+function slideInit(){
+	
+	$('.review_cont').show();
+	
+	$('.review_list').each(function(idx){
+		var slide = $(this).bxSlider({
+			auto: false,
+			speed : 400,
+			controls :false,
+			pager:false,
+			infiniteLoop : true
+		});
+		
+		var $l_btn = $('.left_btn').eq(idx);
+		var $r_btn = $('.right_btn').eq(idx);
+		
+		$l_btn.click(function(){
+			slide.goToPrevSlide();
+		});
+		$r_btn.click(function(){
+			slide.goToNextSlide();
+		});			
+	});
+	
+	$('.review_cont').hide();
+}
+
+
+</script>
+</head>
+<body>
+<div class="navigation">
+	<div class="left menu_btn">		
+	</div>
+	<div class="left logo">
+		<img alt="" src="../mimg/common/logo.png">
+	</div>
+	<div class="left other_btn">
+	</div>
+</div>
+<div class="menu_left">
+	<table class="menu_left_tb">
+		<tbody>
+		<tr>
+			<td><a href=""><img src="../mimg/common/tab1.png"></a></td>
+			<td><a href=""><img src="../mimg/common/tab2.png"></a></td>
+			<td><a href=""><img src="../mimg/common/tab3.png"></a></td>
+			<td><a href=""><img src="../mimg/common/tab4.png"></a></td>
+		</tr>
+		</tbody>
+	</table>
+</div>
+<div class="menu_right">
+	<ul>
+		<li><a href="">로그인</a></li>
+		<li><a href="">회원가입</a></li>
+		<li><a href="">장바구니</a></li>
+		<li><a href="">주문조회</a></li>
+		<li><a href="">Q&A</a></li>
+	</ul>
+</div>
+ <div class="wrap" id="wrapper">
+ 	
+ 	<div class="main_content clear"> 		
+ 		
+ 		<div class="shop">
+ 			<h3><img src="../mimg/shop/shop_title.png" class="title_img"></h3>
+ 			<ul class="shop_list">
+ 				<li>
+ 					<img src="../mimg/shop/shop_prod_1.png" class="shop_menu">
+ 					<div class="review_cont">
+ 						<div class="slide_close_btn">
+ 							<img alt="" src="../mimg/shop/layer_close.png">
+ 						</div>
+ 						<div class="slide_btn">
+ 							<img alt="" src="../mimg/shop/slide_left.png" class="left_btn">
+ 							<img alt="" src="../mimg/shop/slide_right.png" class="right_btn">
+ 						</div>
+ 						<ul class="review_list">
+ 							<li><img src="../mimg/shop/prod_revie.png"></li>
+ 						</ul>
+ 						<div class="buy_btn">
+ 							<a href="" class="btn normal">구매하러 가기</a>
+ 						</div>
+ 					</div> 					
+ 				</li>
+ 				<li>
+ 					<img src="../mimg/shop/shop_prod_2.png" class="shop_menu">
+ 					<div class="review_cont">
+ 						<div class="slide_close_btn">
+ 							<img alt="" src="../mimg/shop/layer_close.png">
+ 						</div>
+ 						<div class="slide_btn">
+ 							<img alt="" src="../mimg/shop/slide_left.png" class="left_btn">
+ 							<img alt="" src="../mimg/shop/slide_right.png" class="right_btn">
+ 						</div>
+ 						<ul class="review_list">
+ 							<li><img src="../mimg/shop/prod_revie.png"></li>
+ 						</ul>
+ 						<div class="buy_btn">
+ 							<a href="" class="btn normal">구매하러 가기</a>
+ 						</div>
+ 					</div>
+ 				</li>
+ 				<li>
+ 					<img src="../mimg/shop/shop_prod_3.png" class="shop_menu">
+ 					<div class="review_cont">
+ 						<div class="slide_close_btn">
+ 							<img alt="" src="../mimg/shop/layer_close.png">
+ 						</div>
+ 						<div class="slide_btn">
+ 							<img alt="" src="../mimg/shop/slide_left.png" class="left_btn">
+ 							<img alt="" src="../mimg/shop/slide_right.png" class="right_btn">
+ 						</div>
+ 						<ul class="review_list">
+ 							<li><img src="../mimg/shop/prod_revie.png"></li>
+ 						</ul>
+ 						<div class="buy_btn">
+ 							<a href="" class="btn normal">구매하러 가기</a>
+ 						</div>
+ 					</div>
+ 				</li>
+ 				<li>
+ 					<img src="../mimg/shop/shop_prod_4.png" class="shop_menu"> 					
+ 					<div class="review_cont">
+ 						<div class="slide_close_btn">
+							<img alt="" src="../mimg/shop/layer_close.png">
+						</div>
+ 						<div class="slide_btn">
+ 							<img alt="" src="../mimg/shop/slide_left.png" class="left_btn">
+ 							<img alt="" src="../mimg/shop/slide_right.png" class="right_btn">
+ 						</div>
+ 						<ul class="review_list">
+ 							<li><img src="../mimg/shop/prod_revie.png"></li>
+ 						</ul>
+ 						<div class="buy_btn">
+ 							<a href="" class="btn normal">구매하러 가기</a>
+ 						</div>
+ 					</div>
+ 				</li>
+ 				<li>
+ 					<img src="../mimg/shop/shop_prod_5.png" class="shop_menu"> 					
+ 					<div class="review_cont">
+	 					<div class="slide_close_btn">
+							<img alt="" src="../mimg/shop/layer_close.png">
+						</div>
+ 						<div class="slide_btn">
+ 							<img alt="" src="../mimg/shop/slide_left.png" class="left_btn">
+ 							<img alt="" src="../mimg/shop/slide_right.png" class="right_btn">
+ 						</div>
+ 						<ul class="review_list">
+ 							<li><img src="../mimg/shop/prod_revie.png"></li>
+ 						</ul>
+ 						<div class="buy_btn">
+ 							<a href="" class="btn normal">구매하러 가기</a>
+ 						</div>
+ 					</div>
+ 				</li>
+ 				<li>
+ 					<img src="../mimg/shop/shop_prod_6.png" class="shop_menu"> 					
+ 					<div class="review_cont">
+ 						<div class="slide_close_btn">
+							<img alt="" src="../mimg/shop/layer_close.png">
+						</div>
+ 						<div class="slide_btn">
+ 							<img alt="" src="../mimg/shop/slide_left.png" class="left_btn">
+ 							<img alt="" src="../mimg/shop/slide_right.png" class="right_btn">
+ 						</div>
+ 						<ul class="review_list">
+ 							<li><img src="../mimg/shop/prod_revie.png"></li>
+ 						</ul>
+ 						<div class="buy_btn">
+ 							<a href="" class="btn normal">구매하러 가기</a>
+ 						</div>
+ 					</div>
+ 				</li>
+ 			</ul>
+ 		</div><!-- shop -->
+ 		
+ 	</div><!-- main_content -->
+ 	
+ 	<div class="footer clear">
+ 		<div class="footer_cont">
+ 			<div class="foot_btns">
+	 			<a href="" class="foot_btn">PC버전</a>
+		 		<a href="" class="foot_btn">로그인</a>
+		 		<a href="" class="foot_btn">맨위로</a>
+		 	</div>
+		 	<div class="foot_agreement">
+		 		<a href="">이용약관</a>
+		 		<a>|</a>
+		 		<a href="">개인정보취급방침</a>
+		 	</div>
+		 	<div class="company">
+		 		<pre>피케이글로벌(대표:강원모) | 주소:인천광역시 계양구 서운사업로 41번길 8
+(서운동,2층) | 고객센터:070-4245-6573 | Fax:032-232-0976 | e-mail:
+info@morethanchocolate.co.kr | 사업자등록번호:122-11-95953 | 
+통신판매업신고:제1012-인천계양-0429호 | 개인정보보호책임자:김현우
+Copyright(C) 2014 morethanchocolate all rights reserved.</pre>
+		 	</div>
+ 		</div>
+	 	 
+	 </div>
+ </div>
+</body>
+</html>

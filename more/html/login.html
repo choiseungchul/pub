@@ -1,0 +1,326 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=euc-kr" />
+<title>More than chocolate</title>
+<meta name="keyword" content="초콜릿" /> 
+<meta name="discription" content="초콜릿" />
+
+<meta http-equiv="imagetoolbar" content="no" />
+<meta http-equiv="Expires" content="0" />
+<meta http-equiv="Cache-Control" content="No-Cache" />
+<meta http-equiv="Pragma" content="no-cache" />
+<link rel="stylesheet" href="../css/member.css" type="text/css"/>
+<script src="../js/jquery-1.7.2.min.js"></script>
+<script src="../js/common.js"></script>
+<script src="../js/jquery.BxSlider.min.js"></script>
+<script type="text/javascript">
+var curr_idx = -1;
+
+$(document).ready(function() {
+	
+	// 최상단 메뉴 
+	$('.sub_menu ul li').mouseenter(function(){		
+		$(this).addClass('on');
+	});
+	$('.sub_menu ul li').mouseleave(function(){
+		$(this).removeClass('on');
+	});
+
+});
+
+</script>
+</head>
+<body>
+<div id="wrap" style="z-index:0">
+	<!-- Top Menu -->
+	<div id="topMenu1">
+		<img class="btn" src="../image/mark_close.png" onClick="menuToggle()"/>
+	</div>
+	<div id="topMenu2" style="position:fixed;top:0px;width:100%;z-index:200;display:none;min-width:1000px">
+		<table width="100%" border="0" align="center" cellpadding="0" cellspacing="0" bgcolor="#483729">
+		  <tr>
+		    <td><div align="center"><a href="#"><img src="../image/mark_01.jpg" width="174" height="126" align="middle" /></a></div></td>
+		  </tr>
+		  <tr>
+		    <td align="center">
+			    <div class="topMenu_line"></div>
+		    </td>
+		  </tr>
+		  <tr>
+		    <td height="130" align="center">		    	
+		    	<table id="menuTbl" width="800" border="0" cellspacing="0" cellpadding="0">
+		      		<tr>
+				        <td width="91"><a href="shop_main.html"><img src="../image/menu_01_nm.jpg" width="91" height="107" class="top_btns"/></a></td>
+				        <td>&nbsp;</td>
+				        <td width="91"><a href="store_main.html"><img src="../image/menu_02_nm.jpg" width="91" height="107" class="top_btns"/></a></td>
+				        <td>&nbsp;</td>
+				        <td width="91"><a href="biz_main.html"><img src="../image/menu_03_nm.jpg"  width="91" height="107" class="top_btns"/></a></td>
+				        <td>&nbsp;</td>
+				        <td width="91"><a href="community_main.html"><img src="../image/menu_04_nm.jpg" width="91" height="107" class="top_btns"/></a></td>
+			      </tr>
+		    	</table>
+		    </td>
+		  </tr>
+		  <tr>
+		    <td align="center">
+		    	<div class="topMenu_line"></div>
+		    </td>
+		  </tr>
+		  <tr>
+		    <td align="center">
+		    	<table width="1000"  border="0" cellpadding="0" cellspacing="0">
+		      		<tr>
+		        		<td height="55">
+		        			<div class="sub_menu" id="menu_dep2_0" >
+		        				<ul>
+		        					<li><a href="shop1.html">Tab Letter White</a></li>
+		        					<li><a href="shop2.html">Tab Letter Color</a></li>
+		        					<li><a href="shop3.html">365 Days Calendar</a></li>
+		        					<li><a href="shop4.html">Special Edition</a></li>
+		        					<li><a href="shop5.html">Baby</a></li>		        					
+		        					<li class="last"><a href="shop6.html">Wedding</a></li>
+		        				</ul>
+		        			</div>
+		        			<div class="sub_menu" id="menu_dep2_1" style="display: none;" >
+		        				<ul>
+		        					<li><a href="store_gallery.html">Store Gallery</a></li>
+		        					<li><a href="store_about.html">About Partner Store</a></li>
+		        					<li class="last"><a href="#">Contact Us</a></li>   					
+		        				</ul>
+		        			</div>
+		        			<div class="sub_menu" id="menu_dep2_2" style="display: none;">
+		        				<ul>
+		        					<li><a href="biz_gallery.html">Biz Gallery</a></li>
+		        					<li><a href="biz_about.html">About MTC</a></li>
+		        					<li><a href="#">How To Order</a></li>
+		        					<li class="last"><a href="#">Contact Us</a></li>		        					
+		        				</ul>
+		        			</div>
+		        			<div class="sub_menu" id="menu_dep2_3" style="display: none;">
+		        				<ul>
+		        					<li><a href="community_brand_story.html">Brand Story</a></li>
+		        					<li><a href="community_event_list.html">Event</a></li>
+		        					<li><a href="community_notice_list.html">Notice</a></li>
+		        					<li><a href="community_media_list.html">Media</a></li>
+		        					<li class="last"><a href="community_qna.html">Q&A</a></li>		        					
+		        				</ul>
+		        			</div>
+		        		</td>
+		      		</tr>
+		    	</table>
+		    </td>
+		  </tr>
+		  <tr>
+		    <td align="center">
+		    	<div class="topMenu_line"></div>
+		    </td>
+		  </tr>		  
+		  <tr>
+		    <td align="center" height="73"><table width="160" border="0" cellspacing="0" cellpadding="0">
+		      <tr>
+		        <td width="36"><img src="../image/bt_blog.jpg" width="36" height="36" /></td>
+		        <td>&nbsp;</td>
+		        <td width="36"><img src="../image/bt_face.jpg" width="36" height="36" /></td>
+		        <td>&nbsp;</td>
+		        <td width="36"><img src="../image/bt_tweet.jpg" width="36" height="36" /></td>
+		      </tr>
+		    </table></td>
+		  </tr>
+		  <tr>
+		    <td>&nbsp;</td>
+		  </tr>
+		</table>
+		<table width="100%" border="0" cellspacing="0" cellpadding="0">
+		  <tr>
+		    <td valign="top" style="width:250; height:250; background-image: url(../image/gnb_sdw.png) ; background-repeat:repeat-x">&nbsp;</td>
+		    <td width="125" valign="top"><img class="btn" src="../image/gnb_close.png" width="125" height="37" onClick="menuToggle();"/></td>
+		    <td valign="top" style="width:250; height:250; background-image: url(../image/gnb_sdw.png) ; background-repeat:repeat-x">&nbsp;</td>
+		  </tr>
+		</table>
+	</div><!-- topMenu2 -->
+	
+	<!-- 우측상단 링크 -->
+	<div class="top_sub_menu">
+		<a href="">로그인</a>
+		<a href=""> | </a>
+		<a href="">회원가입</a>
+		<a href=""> | </a>
+		<a href="">장바구니</a>
+		<a href=""> | </a>
+		<a href="">주문조회</a>
+		<a href=""> | </a>
+		<a href="">Q&A</a>
+	</div>
+	
+	<div class="store_g_title">
+		<img src="../image/member/login_title.png" alt="" />
+		<h3>회원 로그인으로 다양한 혜택과 이벤트를 만나보세요.</h3>
+	</div>
+	
+	<div class="ptrn_bg mt53">
+		<div class="login_box">
+			<div class="login_cont">
+				<div class="login_logo">
+					<img src="../image/member/login_logo.png" alt="" />
+				</div>
+				<div class="login_input">
+					<table cellpadding="0" cellspacing="0" class="login_input_tb">
+						<colgroup>
+							<col width="130"/>
+							<col width="275"/>
+							<col width="225"/>
+						</colgroup>
+						<tbody>
+						<tr>
+							<td class="tit">ID</td>
+							<td>
+								<input type="text" class="input_bg1"/>
+							</td>
+							<td rowspan="2" class="login_td">
+								<span class="login_btn">로그인</span>
+							</td>
+						</tr>
+						<tr>
+							<td class="tit">Password</td>
+							<td>
+								<input type="text" class="input_bg1"/>
+							</td>
+						</tr>
+						</tbody>
+					</table>
+				</div><!-- login_input -->
+				<div class="join_inform">
+					<ul>
+						<li><strong>Join Us </strong>| <span> 회원가입을 하시면 다양한 혜택을 받으실 수 있습니다.</span></li>
+						<li><strong>Forget ID </strong>| <span> 아이디를 분실하셨나요?</span></li>
+						<li><strong>Forget Password </strong> | <span> 비밀번호를 분실하셨나요?</span></li>
+					</ul>
+				</div>
+			</div>
+			
+		</div>
+	</div>
+	
+	<div class="ptrn_bg mt16 mb200">
+		<div class="no_member_login">
+			<table cellpadding="0" cellspacing="0" class="no_member_login_tb">
+				<colgroup>
+					<col width="133"/>
+					<col width="122"/>
+					<col width="123"/>
+					<col width="122"/>
+					<col width="250"/>
+				</colgroup>
+				<tbody>
+				<tr>
+					<td class="nm_tit">이름</td>
+					<td><input type="text" class="input_bg2"/></td>
+					<td class="nm_tit2">결제비밀번호</td>
+					<td><input type="text" class="input_bg2"/></td>
+					<td class="nm_login"><span class="nom_login_btn">비회원주문조회</span></td>
+				</tr>
+				</tbody>
+			</table>			
+		</div>
+	</div>
+	
+	
+	<div class="footer">
+		<div class="foot_top_bg">
+			<div class="foot_top">
+				<div class="left">
+					<div class="foot_top_title">MTC Social</div>
+					<div class="foot_top_img">
+						<ul>
+							<li><a href=""><img src="../image/common/tab1_btn1.png" /></a></li>
+							<li><a href=""><img src="../image/common/tab1_btn3.png" /></a></li>
+							<li><a href=""><img src="../image/common/tab1_btn2.png" /></a></li>
+							<li><a href=""><img src="../image/common/tab1_btn4.png" /></a></li>
+						</ul>
+					</div>
+				</div>
+				<div class="left">
+					<div class="foot_top_title">MTC Story</div>
+					<div class="foot_top_list">
+						<ul>
+							<li><a href="">Brand Story</a></li>
+							<li><a href="">Store Gallery</a></li>
+							<li><a href="">Biz Gallery</a></li>
+						</ul>
+					</div>
+				</div>
+				<div class="left">
+					<div class="foot_top_title">Policy</div>
+					<div class="foot_top_list">
+						<ul>
+							<li><a href="">회원이용약관</a></li>
+							<li><a href="">개인정보취급방침</a></li>
+							<li><a href="">이메일무단수집거부</a></li>
+						</ul>
+					</div>
+				</div>
+				<div class="left">
+					<div class="foot_top_title">Customer</div>
+					<div class="foot_top_list">
+						<ul>
+							<li><a href="">News</a></li>
+							<li><a href="">FAQ</a></li>
+							<li><a href="">아이디/비밀번호찾기</a></li>
+						</ul>
+					</div>
+				</div>
+				<div class="left last">
+					<div class="foot_top_title bold">070-4245-6573</div>
+					<div class="foot_top_list">
+						<ul>
+							<li><a href="">주문/배송조회</a></li>
+							<li><a href="">반품/교환/환불</a></li>
+							<li><a href="">Q&A</a></li>
+						</ul>
+					</div>
+				</div>
+			</div><!-- foot_top -->
+		</div>
+		<div class="foot_bottom_bg">
+			<div class="foot_bottom">
+				<div class="foot_logo left">
+					<img src="../image/common/foot_logo.png" alt="" />
+				</div>
+				<div class="foot_company left">
+					<div class="company_info">
+						<p>
+							<span class="cp_info1">COMPANY</span>
+							<span class="cp_info2">피케이글로벌</span>
+							<span class="cp_info1">OWNER</span>
+							<span class="cp_info2">강원모</span>
+							<span class="cp_info1">ADD</span>
+							<span class="cp_info2">인천광역시 계양구 서운산업로 41번길 8 (서운동, 2층)</span>
+						</p>
+						<p>
+							<span class="cp_info1">TEL</span>
+							<span class="cp_info2">070-4245-6573</span>
+							<span class="cp_info1">FAX</span>
+							<span class="cp_info2">032-232-0976</span>
+							<span class="cp_info1">E-MAIL</span>
+							<span class="cp_info2">info@morethanchocolate.co.kr</span>
+						</p>
+						<p>
+							<span class="cp_info1">사업자등록번호</span>
+							<span class="cp_info2">122-11-95953</span>
+							<span class="cp_info1">통신판매업신고</span>
+							<span class="cp_info2">제1012-인천계양-0429호</span>
+							<span class="cp_info1">개인정보보호책임자</span>
+							<span class="cp_info2">김현우</span>
+						</p>
+					</div>
+					<div class="copyright">Copyright(c) 2014 Morethanchocolate all Rights Reserved.</div>
+				</div>
+			</div>
+		</div>
+		
+	</div>
+	
+</div>
+</body>
+</html>

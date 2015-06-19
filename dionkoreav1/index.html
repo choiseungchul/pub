@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title></title>
+<link rel="stylesheet" href="./css/intro.css">
+<script type="text/javascript" src="./js/three.js"></script>
+<script type="text/javascript" src="./js/combinedCamera.js"></script>
+<script type="text/javascript" src="./js/stats.js"></script>
+<script type="text/javascript" src="./js/orbitControls.js"></script>
+<script type="text/javascript" src="./js/tween.js"></script>
+<script type="text/javascript" src="./js/cube_loc.js"></script>
+
+
+<script type="text/javascript">
+
+window.onload = function (){
+	init();
+	animate();
+}
+
+var container, stats, controls;
+var camera, scene, renderer;
+var projector;
+var lookAtScene = true;
+var directionalLight;
+
+var light_bug;
+
+
+function shuffle(o){ //v1.0
+    for(var j, x, i = o.length; i; j = Math.floor(Math.random() * i), x = o[--i], o[i] = o[j], o[j] = x);
+    return o;
+};
+
+var tweenCompleted = false;
+
+var cubes = new Array();
+var cube_max_count = 460;
+var tweenCompleteCount = 0;
+
+function initCube(scene){
+	var geometry = new THREE.BoxGeometry( 50, 50, 50 );
+	//
+	var material = new THREE.MeshLambertMaterial( { color: 0xffffff, shading: THREE.SmoothShading , overdraw: 0.5 } );
+	//var material = new THREE.MeshPhongMaterial( { color: 0xffffff, shininess : 50 } );
+	
+	for(var i = 0 ; i < cube_max_count ; i ++){
+		var cube = new THREE.Mesh( geometry, material );
+		
+		var plusOrMinus1 = Math.random() < 0.5 ? -1 : 1;
+		var plusOrMinus2 = Math.random() < 0.5 ? -1 : 1;
+		
+		//console.log(plusOrMinus);
+		
+		cube.position.x = (Math.random() * 1000 + 1000) * plusOrMinus1;
+		cube.position.y = (Math.random() * 1000 + 1000)
+		cube.position.z = (Math.random() * 1000 + 1000) * plusOrMinus2;
+	
+		scene.add(cube);
+		cubes.push(cube);
+	}	
+	
+}
+
+
+var originTween = new Array();
+
+function crash(){	
+	if(tweenCompleted){
+		tweenCompleted = false;
+		TWEEN.removeAll();
+		
+		tweenCompleteCount = 0;
+		
+		var cnt = 0;
+		for(var k = 0 ; k < cubes.length; k++){
+			var cube = cubes[cnt];
+			var timer = 500;
+			
+			var plusOrMinus1 = Math.random() < 0.5 ? -1 : 1;
+			var plusOrMinus2 = Math.random() < 0.5 ? -1 : 1;
+			var plusOrMinus3 = Math.random() < 0.5 ? -1 : 1;
+			
+			var to_x = Math.random() * 2500 * plusOrMinus1;
+			var to_y = Math.random() * 400 * plusOrMinus2;
+			var to_z = Math.random() * 2500 * plusOrMinus3;
+			
+			var tween = new TWEEN.Tween( { target: cube, x : cube.position.x, y : cube.position.y, z: cube.position.z  } )
+	         .to( { x: to_x, y: to_y, z: to_z }, timer )        
+	         .easing( TWEEN.Easing.Elastic.InOut )
+	         .onUpdate( function (t, value) {
+	        	 
+	        	 this.target.position.x = this.x;
+	        	 this.target.position.y = this.y;
+	        	 this.target.position.z = this.z;	
+	         } )
+			.onComplete( function(){
+				 tweenCompleteCount ++;
+		      }).start();
+			
+			var chain = new TWEEN.Tween( { target: cube, x: to_x, y: to_y, z: to_z } )
+	        .to( { x : cube.position.x, y : cube.position.y, z: cube.position.z }, 1000 )    
+	        .delay(500)
+	        //.easing( TWEEN.Easing.Elastic.InOut )
+	        .onUpdate( function (t, value) {       	 
+	       	 this.target.position.x = this.x;
+	       	 this.target.position.y = this.y;
+	       	 this.target.position.z = this.z;	       	
+	        } )
+			.onComplete( function(){				
+		    }).start();
+			
+			tween.chain(chain);
+			 
+			TWEEN.add(tween);
+			
+			
+			cnt++;		
+		}		
+		
+		setTimeout(setTweenComplete, 2100);		
+	}
+}
+
+
+function onDocumentMouseDown( event ) {
+
+	event.preventDefault();
+
+	var vector = new THREE.Vector3( ( event.clientX / window.innerWidth ) * 2 - 1, - ( event.clientY / window.innerHeight ) * 2 + 1, 0.5 );
+	projector.unprojectVector( vector, camera );
+
+	var raycaster = new THREE.Raycaster( camera.position, vector.sub( camera.position ).normalize() );
+
+	var intersects = raycaster.intersectObjects( cubes );
+
+	if ( intersects.length > 0 ) {
+
+		console.log(intersects[0]);
+		//crash();
+
+	}
+}
+
+
+function aniInit(){
+	
+	TWEEN.removeAll();
+	tweenCompleteCount = 0;
+	tweenCompleted = false;
+	
+	var cnt = 0;
+	
+	for(var i = 0 ; i < floor.length ; i++){
+		var obj = JSON.parse(floor[i]);
+		
+		var pos_y = - (i * 50) + 225;
+		var arg_x = 0;
+		var arg_z = 0;
+		var margin = 5;
+		
+		if(i == 0){
+			arg_x -= 50;
+		}
+		if( i == 3 || i == 4){
+			arg_x += 50;
+		}
+		if(i == 1){
+			arg_x += 100;
+		}
+		
+		if(i == 0){
+			arg_z -= 50;
+		}
+		if(i == 2 || i == 6 || i == 8){
+			arg_z -=50;
+		}
+		
+		for(var k = 0 ; k < obj.length; k++){
+			
+			var loc = obj[k];
+			
+			var cube = cubes[cnt];
+			
+			var timer = Math.random() * 1000 + (500);
+			var delay = (400) * (8-i);
+			
+			var tween = new TWEEN.Tween( { target: cube, x : cube.position.x, y : cube.position.y, z: cube.position.z  } )
+	         .to( { x: loc.x + arg_x, y: pos_y, z: loc.z + arg_z }, timer )
+	         .delay(delay)
+	         //.easing( TWEEN.Easing.Elastic.InOut )
+	         .onUpdate( function (t, value) {
+	        	 this.target.position.x = this.x;
+	        	 this.target.position.y = this.y;
+	        	 this.target.position.z = this.z;	
+	         } )
+	         .onComplete( function(){	        	
+	         })
+	         .start();
+			 
+			TWEEN.add(tween);
+			
+			cnt++;		
+		}		
+		
+		setTimeout(setTweenComplete, 4800);
+	}	
+	
+}
+
+function setTweenComplete(){
+	tweenCompleted = true;
+}
+
+var debugaxis = function(axisLength){
+    //Shorten the vertex function
+    function v(x,y,z){ 
+            return new THREE.Vector3(x,y,z); 
+    }
+    
+    //Create axis (point1, point2, colour)
+    function createAxis(p1, p2, color){
+            var line, lineGeometry = new THREE.Geometry(),
+            lineMat = new THREE.LineBasicMaterial({color: color, lineWidth: 1});
+            lineGeometry.vertices.push(p1, p2);
+            line = new THREE.Line(lineGeometry, lineMat);
+            scene.add(line);
+    }
+    
+    createAxis(v(-axisLength, 0, 0), v(axisLength, 0, 0), 0xFF0000);
+    createAxis(v(0, -axisLength, 0), v(0, axisLength, 0), 0x00FF00);
+    createAxis(v(0, 0, -axisLength), v(0, 0, axisLength), 0x0000FF);
+};
+
+function init() {
+
+	container = document.getElementById("cubebox");
+
+	camera = new THREE.OrthographicCamera( window.innerWidth / - 1.2, window.innerWidth / 1.2, window.innerHeight / 1.2, window.innerHeight / - 1.2, - 1000, 2000 );
+	
+	camera.position.x = 200;
+	camera.position.y = 120;
+	camera.position.z = -200;
+	
+
+	scene = new THREE.Scene();
+
+	controls = new THREE.OrbitControls( camera );
+	
+	// create guide
+	//debugaxis(1100);
+	
+	// Grid
+
+	
+	var size = 500, step = 50;
+
+	var geometry = new THREE.Geometry();
+	/*
+	for ( var i = - size; i <= size; i += step ) {
+
+		geometry.vertices.push( new THREE.Vector3( - size, 0, i ) );
+		geometry.vertices.push( new THREE.Vector3(   size, 0, i ) );
+
+		geometry.vertices.push( new THREE.Vector3( i, 0, - size ) );
+		geometry.vertices.push( new THREE.Vector3( i, 0,   size ) );
+
+	}*/
+
+	/*
+	var material = new THREE.LineBasicMaterial( { color: 0x000000, opacity: 0.2 } );
+
+	var line = new THREE.Line( geometry, material );
+	line.type = THREE.LinePieces;
+	scene.add( line );
+	*/
+
+	stats = new Stats();
+	stats.domElement.style.position = 'absolute';
+	stats.domElement.style.top = '0px';
+	container.appendChild( stats.domElement );
+	
+	initCube(scene);
+	aniInit();
+
+	var ambientLight = new THREE.AmbientLight( Math.random() * 0x10 );
+	//scene.add( ambientLight );
+	
+	directionalLight = new THREE.DirectionalLight( 0xffffff, 0.9 );
+	directionalLight.position.x = 100;
+	directionalLight.position.y = 200;
+	directionalLight.position.z = 0;
+	directionalLight.position.normalize();
+	scene.add( directionalLight );
+	
+	projector = new THREE.Projector();
+	
+	var sphere = new THREE.SphereGeometry( 10, 16, 8 );
+
+	light1 = new THREE.PointLight( 0xff7e00, 2, 650 );
+	light1.add( new THREE.Mesh( sphere, new THREE.MeshBasicMaterial( { color: 0xff7e00 } ) ) );
+	light1.position.x = 1600;
+	light1.position.y = 1600;
+	light1.position.z = 1600;
+	
+	scene.add( light1 );
+	
+	/*
+	camera.add( spotLight.target );
+	spotLight.target.position.set( 0, 0, -1 );
+	spotLight.position = camera.position;
+	*/
+
+	
+	// 뒤에 떠다니는 박스
+	/*
+	var radius   = 1500,
+    segments = 64,
+    orbit_material = new THREE.LineBasicMaterial( { color: 0x0000ff } ),
+    orbit_geometry = new THREE.CircleGeometry( radius, segments );
+	
+	var orbit_line = new THREE.Line( orbit_geometry, orbit_material );
+	scene.add(orbit_line);
+	*/
+	
+	//var some = new THREE.Mesh( orbit_geometry, orbit_material );	
+	//scene.add(some);
+	
+	//document.addEventListener( 'mousedown', onDocumentMouseDown, false );
+	window.addEventListener( 'resize', onWindowResize, false );
+	////////////////////////////////////////////////////////////
+	
+	
+	//renderer = new THREE.WebGLRenderer({alpha : true, antialias: true});
+	renderer = new THREE.CanvasRenderer({alpha : true});
+	renderer.setClearColor( 0x000000, 0 );
+	renderer.setSize( window.innerWidth, window.innerHeight );
+
+	container.appendChild( renderer.domElement );
+}
+
+function onWindowResize() {
+
+	camera.left = window.innerWidth / - 1.2;
+	camera.right = window.innerWidth / 1.2;
+	camera.top = window.innerHeight / 1.2;
+	camera.bottom = window.innerHeight / - 1.2;
+
+	camera.updateProjectionMatrix();
+
+	renderer.setSize( window.innerWidth, window.innerHeight );
+
+}
+
+function animate() {
+
+	requestAnimationFrame( animate );
+
+	TWEEN.update();
+	controls.update();
+	stats.update();
+	
+	render();	
+
+}
+
+function render() {
+
+	var timer = Date.now() * 0.0002;
+	
+	//camera.position.x = Math.cos( timer ) * 200;
+	//camera.position.z = Math.sin( timer ) * 200;
+	
+	if ( lookAtScene ) camera.lookAt( scene.position );
+
+	directionalLight.position.x = camera.position.x;
+	directionalLight.position.z = camera.position.z;
+	directionalLight.position.y = 400;
+	
+	var time = Date.now() * 0.0015;
+	
+	light1.position.x = Math.sin( time * 0.7 ) * 630;
+	light1.position.y = Math.cos( time * 0.5 ) * 440;
+	light1.position.z = Math.cos( time * 0.3 ) * 630;
+	
+	//directionalLight.color = Math.random() *  0xffffff;
+	renderer.render( scene, camera );
+
+	
+}
+
+
+</script>
+</head>
+<body>
+<div class="crash_btn" onclick="crash()"></div>
+<div class="box3d" id="cubebox"></div>
+<div class="wrapper intro">
+<div class="content">
+
+	<div class="logo">
+		<img alt="" src="./img/intro/logo.png">
+	</div>
+			 
+	<div class="intro_btns">
+		<h4 class="fn">퀄리티는 금액에서 나오는게 아니라 기술에서 나옵니다.</h4>
+		<div class="skip_btn">
+			<a href="javascript:"><img alt="" src="./img/intro/btn_skip.png"></a>
+		</div>
+	</div>
+	
+</div>
+</div>
+</body>
+</html>

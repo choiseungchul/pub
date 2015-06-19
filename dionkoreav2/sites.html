@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <title>포트폴리오</title>
+		<meta charset="EUC-KR" />
+		<meta http-equiv="Access-Control-Allow-Origin" content="*">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"> 
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">         
+		<link rel="stylesheet" type="text/css" href="css/demo.css" />
+		<link rel="stylesheet" type="text/css" href="css/style.css" />		
+    </head>
+    <body>
+    	<div class="image_layer">    		
+    		<div class="image_view">
+    			<img alt="" src="./img/close.png" class="close_btn">	
+    		</div>			
+			<div class="img_overlay" ></div>
+    	</div>
+    	 
+    	 <!--  -->
+    	<div class="sites_loader">
+    		<img alt="" src="./img/ajax-loader.gif" class="loader_img">
+    	</div>    	
+    	 
+		<div class="container">
+			
+			<div class="slide_wrapper">
+				<div class="slide_content">
+					<div class="imagelist_container" id="imageList">						
+					</div>					
+				</div>
+			</div>
+	
+		</div>
+		<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>		
+		<script src="//code.jquery.com/ui/1.11.1/jquery-ui.js"></script>
+		<script type="text/javascript">
+		
+			var slideSpeed = 1000 / 24;
+			var direction = 'left';
+			var moveX = 1.45;
+			var slideId = -1;
+			var isDrag = false;
+			
+			var addLeftPosition = -$(window).width() / 2;
+			var addRightPosition = -$(window).width()  - $(window).width() / 2;
+			var slide_width = 0;
+			var windowWidth = $(window).width();
+			var windowHeight = $(window).height();
+		
+			window.requestAnimFrame = (function(callback) {
+			    return window.requestAnimationFrame || window.webkitRequestAnimationFrame || window.mozRequestAnimationFrame || window.oRequestAnimationFrame || window.msRequestAnimationFrame ||
+			    function(callback) {
+			    	window.setTimeout(callback,slideSpeed);
+			    };
+		  	})();
+		
+			function infiniteSlide(){
+				if(!isDrag){
+					var currX = $('.slide_content').css('left').replace('px','');
+					
+					if(direction == 'left'){
+						$('.slide_content').css('left', (currX - moveX) + 'px');
+						
+					}else if(direction == 'right'){						
+						var nextX = parseFloat(currX) + parseFloat(moveX);						
+						$('.slide_content').css('left', nextX + 'px');						
+					}				
+					
+					if(currX > addLeftPosition){
+						isDrag = true;
+						$('.slide_content').css('left', (parseFloat(currX) - slide_width) + 'px');
+						isDrag = false;
+					}else if(currX <= addRightPosition){
+						isDrag = true;
+						$('.slide_content').css('left', (parseFloat(currX) + slide_width) + 'px');						
+						isDrag = false;
+					}
+					
+				}
+				
+				slideId = requestAnimFrame(infiniteSlide, slideSpeed);
+			}
+			
+			
+			var isImageSm = false;
+			var imageArr = [];
+			var imagePoint = 0;
+			
+			function imageLoad(){
+				
+				$.ajax({
+					url : 'http://webadsky.kr/site.php',
+					//url : 'http://localhost:8080/dionkorea/test.xml',
+					dataType: 'xml',
+					success: function(data){
+						var imgList = $(data).find('site');
+						
+						var $imgcontainer = $('#imageList');
+						
+						for(var i = 0 ; i < imgList.length; i++){
+							var url_1 = $(imgList[i]).find('url_0').text().trim();
+							var url_0 = $(imgList[i]).find('url_1').text().trim();
+							var con = $(imgList[i]).find('con').text().trim();
+							
+							if(!isImageSm){
+								if(url_0 != ''){
+									var $img = $('<img/>').addClass('img_lg').attr('src', url_0);
+									var wrap = $('<div class="left w268" />');									
+									$imgcontainer.append($img);
+									$img.wrap(wrap);
+									
+									imagePoint += 2;
+								}
+							}else{
+								imageArr.push(url_0);
+								isImageSm = false;
+							}						
+							
+							if($('div.sm_img').length == 0){
+								if(url_1 != ''){							
+									var $img = $('<img/>').addClass('img_sm').attr('src', url_1);
+									$imgcontainer.append($img);
+									var wrap = $('<div class="left sm_img w133" />');
+									$img.wrap(wrap);
+									isImageSm = true;			
+
+									imagePoint += 1;
+								}
+							}else{
+								var $img = $('<img/>').addClass('img_sm').attr('src', url_1);
+								$('.sm_img').append($img).removeClass('sm_img');
+								
+								imagePoint += 1;
+							}
+							
+							if(imageArr.length > 0){
+								var $img = $('<img/>').addClass('img_lg').attr('src', imageArr[0]);
+								$('.sm_img').append($img).removeClass('sm_img');
+								
+								imageArr = [];
+								
+								imagePoint += 2;
+							}
+						}
+						
+						var $container = $('.imagelist_container');
+						//$container.width(windowWidth);
+						//$container.height(windowHeight);
+						var a_width = 413;
+						var a_height = 214;
+						
+						var w_point = parseInt((windowWidth / a_width) * 3);
+						var h_point = parseInt(((windowHeight / a_height) * 2)) + 1;
+						
+						var sl_w = parseInt(((imagePoint/3) * a_width) / h_point);
+						
+						if(imagePoint > w_point){						
+							sl_w = sl_w - (sl_w % a_width) + 5;							
+						}else{
+							sl_w = windowWidth;							
+						}
+						
+						slide_width = sl_w;
+						
+						$('.imagelist_container').width(sl_w);
+						
+						// 빈칸 채우기
+						var xaw = parseInt((sl_w / a_width) * 2);
+						var isAdded = false;
+						var lastIndex = 0;
+						console.log('xaw = ' + xaw);
+						
+						// xaw  번째꺼
+						for(var k = 1 ; k < $('.imagelist_container > .left').length / xaw; k++){
+													
+							var $el = $('.imagelist_container > .left').eq(parseInt(xaw * k)-1).addClass('dddd');	
+							
+							if($el.hasClass('w133')){
+								if(!isAdded){
+									$el.after($('<div class="w133" />').append($el.html()));
+									isAdded = true;
+								}
+							}					
+							
+							lastIndex = parseInt(parseInt(xaw * k)-1);
+						}
+						
+						// 마지막줄 채우기
+						var _rep = xaw - ( $('.imagelist_container > .left').length - lastIndex );
+						console.log(_rep);
+						
+						for(var s = 0 ; s < _rep; s++){
+							var $addEl =  $('.imagelist_container > .left').eq(s).clone().addClass('fill');
+							
+							$('.imagelist_container').append($addEl);
+						}
+						var lastImageIndex = Math.random() * ($('.imagelist_container > .w268 > img').length);
+						var lastImage = $('.imagelist_container > .w268 > img').eq(lastImageIndex).attr('src');
+						
+						$('.imagelist_container').append($('<div class="w268"/>').append($('<img src="'+lastImage+'" />').addClass('img_lg')));
+						
+						$('.w133').each(function(){
+							var _imgs = $(this).find('img');
+							if(_imgs.length == 1){
+								var _clone_img = $(_imgs[0]).clone().addClass('cl'); 
+								//console.log(_clone_img);
+								$(this).append(_clone_img);
+							}
+						});
+						
+						// 3개로 복제
+						$('.slide_content').width(sl_w * 3);
+						$('.slide_content').prepend($container.clone().css('left', -sl_w + 'px'));
+						$('.slide_content').append($container.clone());
+						
+						addLeftPosition = -sl_w / 2;
+						addRightPosition = -sl_w  - sl_w / 2;
+						
+						$('.sites_loader').hide();
+						
+						infiniteSlide();
+						
+					},error:function(e){
+						console.log(e);
+					}
+				})
+			}
+			
+			$(function() {
+				// 로더 표시
+				$('.sites_loader').width(windowWidth);
+				$('.sites_loader').height(windowHeight);
+				
+				var prev_dragX = -1;
+				
+				// 이미지 컨테이너 이동
+				$('.slide_content').draggable({
+					axis : 'x',
+					stop: function() {
+						var currX = $('.slide_content').offset().left;
+						if(prev_dragX != -1){
+							if(prev_dragX > currX){
+								direction = 'left';								
+							}else{
+								direction = 'right';
+							}							
+						}							
+						
+						isDrag = false;
+				    },
+				    start: function(){
+				    	var currX = $('.slide_content').offset().left;
+				    	prev_dragX = currX;
+				    	isDrag = true;
+				    	
+				    },
+				    drag: function(){
+				    	
+				    }
+				});
+				
+				
+				// 이미지 보기
+				var isAnimate = false;
+				
+				$('.imagelist_container div img').live('click',function(){
+					$('.img_overlay').show();
+					
+					var x = $(this).offset().left;
+					var y = $(this).offset().top;
+					var w = $(this).width();
+					var h = $(this).height();
+					
+					var $clone = $(this).clone().attr('id' ,'imageContainer');
+					
+					$clone.css({
+						'position' : 'absolute',
+						'z-index' : 20001,
+						'margin-left' : x + 'px',
+						'margin-top' : y + 'px',
+						'width' : w + 'px',
+						'height' : h + 'px'
+					});
+					
+					$('.image_view').append($clone);
+					
+					$clone.animate({
+						'margin-left' : '-336px',
+						'margin-top' : (-263 + $(window).scrollTop()) + 'px',
+						'width' : '673px',
+						'height' : '526px',
+						'top' : '50%',
+						'left' : '50%'
+					},700,function(){
+						var c_x = $('.close_btn').position().left;
+						var c_y = $('.close_btn').position().top;
+						
+						$('.close_btn').show().css({
+							'margin-left' : 316  + 'px',
+							'margin-top' : (-283 + $(window).scrollTop()) + 'px'
+						});
+					});
+					
+				});
+				$('.img_overlay').click(function(){
+					$(this).hide();
+					$('#imageContainer').remove();
+					$('.close_btn').hide();
+				});
+				
+				$('.close_btn').click(function(){
+					$('.img_overlay').hide();
+					$('#imageContainer').remove();
+					$('.close_btn').hide();
+				});
+				
+				var waitForFinalEvent = (function () {
+				  var timers = {};
+				  return function (callback, ms, uniqueId) {
+				    if (!uniqueId) {
+				      uniqueId = "Don't call this twice without a uniqueId";
+				    }
+				    if (timers[uniqueId]) {
+				      clearTimeout (timers[uniqueId]);
+				    }
+				    timers[uniqueId] = setTimeout(callback, ms);
+				  };
+				})();
+
+
+				// Usage
+				$(window).resize(function () {
+				    waitForFinalEvent(function(){
+				    	d_width		= $(window).width();
+				    	windowWidth = $(window).width();
+				    	
+				    }, 500, "some unique string");
+				});
+				
+				imageLoad();
+			});
+			
+		</script>
+    </body>
+</html>

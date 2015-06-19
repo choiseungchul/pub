@@ -1,0 +1,39 @@
+사용자 정보 DB
+
+t_name : scmind_user
+
+pri_key  		email		이메일 주소
+		name		사용자 이름
+		level		사용자 레벨
+		grade		사용자 등급( 일반, 고급, VIP, 관리자 등등 )
+		point		포인트 
+		cash_point	캐시포인트
+		idx		인덱스
+		first_date		처음 접속한 시간
+		latest_date	최근 접속시간
+		latest_pic		최근 사진 경로
+		profileid		페이스북 프로필 아이디
+
+
+그림 DB
+
+t_name : scmind_draws
+
+		idx		인덱스
+		uidx		사용자 인덱스값
+		data		사용자 그림 데이터 base64String
+		date		그림 그린 날짜
+
+
+공지사항 DB
+
+t_name : scmind_notice
+
+		idx		인덱스
+		date		날짜
+		title		제목
+		content		내용
+		
+		
+		
+

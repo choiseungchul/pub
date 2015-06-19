@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>CatchMind</title>
+<meta http-equiv="X-Frame-Options" content="GOFORIT">
+<link rel="stylesheet" type="text/css" href="http://arcray.dothome.co.kr/scminddev/css/catchmind.css">
+<link rel="stylesheet" type="text/css" href="css/modal/basic.css">
+<link rel="stylesheet" type="text/css" href="css/ui-lightness/ui.all.css">
+<script src="/socket.io/socket.io.js"></script>
+<script src="/script/jquery-1.7.2.js"></script>
+<script src="/script/simplemodal.js"></script>
+<script src="/script/jquery-ui-1.8.23.custom.min.js"></script>
+<script src="/script/jquery.corner.js"></script>
+<script src="common.js"></script>
+<script src="catchmind.js"></script>
+<script type="text/javascript">
+$(function() {
+	$( ".linewidth" ).slider({
+		min : 1,
+		max : 8,
+		value : 3,
+		range : "min",
+		disabled : true
+	});
+});
+</script>
+</head>
+<body>
+<div id="fb-root"></div>
+<div class="wrap_alert">
+	<p></p>
+</div>
+<div class="wrap_game">
+	<div class="header"></div>
+	<div class="mid">
+		<div class="content">
+			<span class="roomname">방이름</span>
+			<p class="timer">
+				<span class="min">00</span>:<span class="second">00</span>
+			</p>
+			<p class="answer">정답</p>
+			<div class="canvas">
+				<canvas id="drawimg" width="720" height="480" class="cursor">
+					HTML5를 지원하지 않는 브라우저입니다.<br />
+					해당 게임은 크롬 브라우저에 최적화 되어있습니다.<br />
+					<a href="http://www.google.com/chrome">크롬다운로드</a>
+				</canvas>
+			</div>
+			<div class="controller">
+				<div class="pallet">
+					<span style="background-color: red" class="c_red"></span>
+					<span style="background-color: green" class="c_green"></span>
+					<span style="background-color: yellow;" class="c_yellow"></span>
+					<span style="background-color: black;" class="c_black"></span>
+					<span style="background-color: blue;" class="c_blue"></span>
+				</div>
+				<div class="linewidth_cont">
+					<div class="linewidth"></div>
+					<div class="linepx">3 px</div>				
+				</div>
+				
+				<div class="clearbtn">
+					<span onclick="clearCanvas();">지우기</span>
+				</div>
+			</div>
+			<div class="chat_cont">
+				<div class="msgcont"></div>
+				<div class="chat_input_cont">
+					<input type="text" value="" id="chatInput" disabled="disabled"/>
+					<input type="button" value="채팅지우기" onclick="removechat()"/>
+				</div>
+			</div>
+		</div>
+		<div class="aside">
+			<div class="savepng_btn">
+				<span onclick="saveDrawing()">PNG로 저장하기</span>
+			</div>
+			<div class="userlist"></div>
+			<div class="roomout_btn">
+				<span class="starter" onclick="gameStart()">게임시작</span>
+				<span onclick="leaveroom()">나가기</span>
+			</div>
+		</div>
+	</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,182 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=euc-kr" />
+<title>More than chocolate</title>
+<meta name="keyword" content="초콜릿" /> 
+<meta name="discription" content="초콜릿" />
+<meta http-equiv="imagetoolbar" content="no" />
+<meta http-equiv="Expires" content="0" />
+<meta http-equiv="Cache-Control" content="No-Cache" />
+<meta http-equiv="Pragma" content="no-cache" />
+<link rel="stylesheet" href="../css/main.css" type="text/css"/>
+<script src="../js/jquery-1.7.2.min.js"></script>
+<script src="../js/common.js"></script>
+
+<style type="text/css" style="display: none !important;"> 
+body {
+	overflow-x: hidden;
+}
+</style>
+
+<script type="text/javascript">
+$(document).ready(function() {
+	
+	// 최상단 메뉴 
+	$('.sub_menu ul li').mouseenter(function(){		
+		$(this).addClass('on');
+	});
+	$('.sub_menu ul li').mouseleave(function(){
+		$(this).removeClass('on');
+	});
+	
+	$('.main_navi ul li').click(function(){
+		var idx = $('.main_navi ul li').index(this);
+		$('.main_navi ul li').removeClass('on');
+		$('.main_navi ul li').eq(idx).addClass('on');
+		
+		var height = $('.bg_container').eq(0).height();
+		$('body, html').animate({scrollTop: idx * height}, '400', function() {});
+	});
+	
+});
+</script>
+
+</head>
+<body>
+<div id="wrap" style="z-index:0">
+	<!-- Top Menu -->
+	<div id="topMenu1" style="position:fixed;top:0px;left:50%;margin-left:-61px;z-index:100;min-width:1000px">
+		<img class="btn" src="../image/mark_close.png" onClick="menuToggle()"/>
+	</div>
+	<div id="topMenu2" style="position:fixed;top:0px;width:100%;z-index:200;display:none;min-width:1000px">
+		<table width="100%" border="0" align="center" cellpadding="0" cellspacing="0" bgcolor="#483729">
+		  <tr>
+		    <td><div align="center"><a href="#"><img src="../image/mark_01.jpg" width="174" height="126" align="middle" /></a></div></td>
+		  </tr>
+		  <tr>
+		    <td align="center">
+			    <div class="topMenu_line"></div>
+		    </td>
+		  </tr>
+		  <tr>
+		    <td height="130" align="center">		    	
+		    	<table id="menuTbl" width="800" border="0" cellspacing="0" cellpadding="0">
+		      		<tr>
+				        <td width="91"><a href="shop_main.html"><img src="../image/menu_01_nm.jpg" width="91" height="107" class="top_btns"/></a></td>
+				        <td>&nbsp;</td>
+				        <td width="91"><a href="store_main.html"><img src="../image/menu_02_nm.jpg" width="91" height="107" class="top_btns"/></a></td>
+				        <td>&nbsp;</td>
+				        <td width="91"><a href="biz_main.html"><img src="../image/menu_03_nm.jpg"  width="91" height="107" class="top_btns"/></a></td>
+				        <td>&nbsp;</td>
+				        <td width="91"><a href="community_main.html"><img src="../image/menu_04_nm.jpg" width="91" height="107" class="top_btns"/></a></td>
+			      </tr>
+		    	</table>
+		    </td>
+		  </tr>
+		  <tr>
+		    <td align="center">
+		    	<div class="topMenu_line"></div>
+		    </td>
+		  </tr>
+		  <tr>
+		    <td align="center">
+		    	
+		    </td>
+		  </tr>
+		  <tr>
+		    <td align="center">
+		    	<div class="topMenu_line"></div>
+		    </td>
+		  </tr>		  
+		  <tr>
+		    <td align="center" height="73"><table width="160" border="0" cellspacing="0" cellpadding="0">
+		      <tr>
+		        <td width="36"><img src="../image/bt_blog.jpg" width="36" height="36" /></td>
+		        <td>&nbsp;</td>
+		        <td width="36"><img src="../image/bt_face.jpg" width="36" height="36" /></td>
+		        <td>&nbsp;</td>
+		        <td width="36"><img src="../image/bt_tweet.jpg" width="36" height="36" /></td>
+		      </tr>
+		    </table></td>
+		  </tr>
+		  <tr>
+		    <td>&nbsp;</td>
+		  </tr>
+		</table>
+		<table width="100%" border="0" cellspacing="0" cellpadding="0">
+		  <tr>
+		    <td valign="top" style="width:250; height:250; background-image: url(../image/gnb_sdw.png) ; background-repeat:repeat-x">&nbsp;</td>
+		    <td width="125" valign="top"><img class="btn" src="../image/gnb_close.png" width="125" height="37" onClick="menuToggle();"/></td>
+		    <td valign="top" style="width:250; height:250; background-image: url(../image/gnb_sdw.png) ; background-repeat:repeat-x">&nbsp;</td>
+		  </tr>
+		</table>
+	</div><!-- topMenu2 -->
+	
+	<div class="main_navi">
+		<ul>
+			<li class="on"></li>
+			<li></li>
+			<li></li>
+			<li></li>
+		</ul>
+	</div>
+	
+	<!-- 우측상단 링크 -->
+	<div class="top_sub_menu">
+		<a href="">로그인</a>
+		<a href=""> | </a>
+		<a href="">회원가입</a>
+		<a href=""> | </a>
+		<a href="">장바구니</a>
+		<a href=""> | </a>
+		<a href="">주문조회</a>
+		<a href=""> | </a>
+		<a href="">Q&A</a>
+	</div>
+	
+	<!-- Background Images -->
+	<div id="bg" style="position:absolute;top:0px;left:0px;z-index:0">
+		<div class="bg_container">
+			<div class="text_area">
+				<h2>Creative Art Chocolate</h2>
+				<pre>사랑, 축하, 감사, 우정
+당신이 전달하고 싶은 모든 감정을 달콤한 미각 뿐 아니라,
+미려한 시각으로도 표현하기 위해 ‘모어댄초콜릿’은 태어났습니다.</pre>
+			</div>
+			<img src="../image/main_img_01.jpg" style="width:100%" alt="">
+		</div>
+		
+		<div class="bg_container">
+			<div class="text_area">
+				<h2>Tab Letter White</h2>
+				<pre>놀라운 해상도의 이미지는 100% 초콜릿입니다.
+다크초콜릿과 화이트 초콜릿의 고유의 색을 이용하여
+흑과 백의 음영차이로 이미지를 표현합니다.</pre>
+			</div>
+			<img src="../image/main_img_02.jpg" style="width:100%" alt="">
+		</div>
+		
+		<div class="bg_container">
+			<div class="text_area">
+				<h2>Tab Letter Color</h2>
+				<pre>화이트 초콜릿 판 위에 식용잉크를 이용한
+고퀄리티의 이미지 초콜릿을 만듭니다.</pre>
+			</div>
+			<img src="../image/main_img_03.jpg" style="width:100%" alt="">
+		</div>
+		
+		<div class="bg_container">
+			<div class="text_area">
+				<h2>Partner Store</h2>
+				<pre>세상에 없던 제품,
+불황을 이겨낼 또 다른 아이템,
+누구도 보지 못했던 그러나 한 번 보면 잊을 수 업는 제품.
+우리는 그것이 준비되어 있습니다.</pre>
+			</div>
+			<img src="../image/main_img_04.jpg" style="width:100%" alt="">
+		</div>		
+	</div>
+</div>
+</body>
+</html>

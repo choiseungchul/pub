@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>CatchMind</title>
+<meta http-equiv="X-Frame-Options" content="GOFORIT">
+<link rel="stylesheet" type="text/css" href="http://arcray.dothome.co.kr/scminddev/css/catchmind.css">
+<link rel="stylesheet" type="text/css" href="css/ui-lightness/ui.all.css">
+<link rel="stylesheet" type="text/css" href="css/modal/basic.css">
+<script src="/socket.io/socket.io.js"></script>
+<script src="/script/jquery-1.7.2.js"></script>
+<script src="/script/simplemodal.js"></script>
+<script src="/script/jquery-ui-1.8.23.custom.min.js"></script>
+<script src="/script/jquery.corner.js"></script>
+<script src="common.js"></script>
+<script src="mydraw.js"></script>
+<script type="text/javascript">
+$(function() {
+	$( ".linewidth" ).slider({
+		min : 1,
+		max : 8,
+		value : 3,
+		range : "min",
+		disabled : true
+	});
+});
+</script>
+</head>
+<body>
+<div id="fb-root"></div>
+<div class="canvas_change">
+	<input type="range" min="180" max="1080" id="c_width" /><br />
+	<input type="range" min="120" max="720" "id="c_height" /><br />
+	<span onclick="closeCv();">닫기</span>
+</div>
+<div class="wrap">
+	<div class="header"></div>
+	<div class="mid">
+		<div class="content">
+			<span class="roomname">혼자 그리기</span>
+			<span class="rantxt">&nbsp;</span>
+			<div class="canvas">
+				<canvas id="drawimg" width="720" height="480" class="cursor">
+					HTML5를 지원하지 않는 브라우저입니다.<br />
+					해당 게임은 크롬 브라우저에 최적화 되어있습니다.<br />
+					<a href="http://www.google.com/chrome">크롬다운로드</a>
+				</canvas>
+			</div>
+			<div class="controller">
+				<div class="pallet">
+					<span style="background-color: red" class="c_red"></span>
+					<span style="background-color: green" class="c_green"></span>
+					<span style="background-color: yellow;" class="c_yellow"></span>
+					<span style="background-color: black;" class="c_black"></span>
+					<span style="background-color: blue;" class="c_blue"></span>
+				</div>
+				<div class="linewidth_cont">
+					<div class="linewidth"></div>
+					<div class="linepx">3 px</div>				
+				</div>
+				
+				<div class="clearbtn">
+					<span onclick="clearCanvas();">지우기</span>
+				</div>
+			</div>
+		</div>
+		<div class="aside">
+			<div class="savepng_btn">
+				<span onclick="saveDrawing()">PNG로 저장하기</span>
+			</div>
+			<div class="userlist_mypage">
+				<div class="user_box">
+					<div class="userpic">
+						<img class="userpicture" src="" alt="">
+					</div>
+					<div class="userinfo">
+						<div class="user_name"></div>
+					</div>
+				</div>
+				<div class="etc_cont">
+					<span>뭐를 그려야 될지 모르시겠다구요??</span><br/>
+					<span class="createtxt_btn" onclick="createtxt();">랜덤 단어 출력</span>
+				</div>
+			</div>
+			<div class="roomout_btn">
+				<span onclick="location.href='/index.html'">나가기</span>
+			</div>
+		</div>
+	</div>
+</div>
+</body>
+</html>

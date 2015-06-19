@@ -1,0 +1,216 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=euc-kr" />
+<title>More than chocolate</title>
+<meta name="keyword" content="초콜릿" /> 
+<meta name="discription" content="초콜릿" />
+
+<meta http-equiv="imagetoolbar" content="no" />
+<meta http-equiv="Expires" content="0" />
+<meta http-equiv="Cache-Control" content="No-Cache" />
+<meta http-equiv="Pragma" content="no-cache" />
+<link rel="stylesheet" href="../css/store_biz.css" type="text/css"/>
+<script src="../js/jquery-1.7.2.min.js"></script>
+<script src="../js/common.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function() {
+	
+	// 최상단 메뉴 
+	$('.sub_menu ul li').mouseenter(function(){		
+		$(this).addClass('on');
+	});
+	$('.sub_menu ul li').mouseleave(function(){
+		$(this).removeClass('on');
+	});
+	
+});
+
+</script>
+</head>
+<body>
+<div id="wrap" style="z-index:0">
+	<!-- Top Menu -->
+	<div id="topMenu1">
+		<img class="btn" src="../image/mark_close.png" onClick="menuToggle()"/>
+	</div>
+	<div id="topMenu2" style="position:fixed;top:0px;width:100%;z-index:200;display:none;min-width:1000px">
+		<table width="100%" border="0" align="center" cellpadding="0" cellspacing="0" bgcolor="#483729">
+		  <tr>
+		    <td><div align="center"><a href="#"><img src="../image/mark_01.jpg" width="174" height="126" align="middle" /></a></div></td>
+		  </tr>
+		  <tr>
+		    <td align="center">
+			    <div class="topMenu_line"></div>
+		    </td>
+		  </tr>
+		  <tr>
+		    <td height="130" align="center">		    	
+		    	<table id="menuTbl" width="800" border="0" cellspacing="0" cellpadding="0">
+		      		<tr>
+				        <td width="91"><a href="shop_main.html"><img src="../image/menu_01_nm.jpg" width="91" height="107" class="top_btns"/></a></td>
+				        <td>&nbsp;</td>
+				        <td width="91"><a href="store_main.html"><img src="../image/menu_02_nm.jpg" width="91" height="107" class="top_btns"/></a></td>
+				        <td>&nbsp;</td>
+				        <td width="91"><a href="biz_main.html"><img src="../image/menu_03_ov.jpg"  width="91" height="107" class="top_btns on"/></a></td>
+				        <td>&nbsp;</td>
+				        <td width="91"><a href="community_main.html"><img src="../image/menu_04_nm.jpg" width="91" height="107" class="top_btns"/></a></td>
+			      </tr>
+		    	</table>
+		    </td>
+		  </tr>
+		  <tr>
+		    <td align="center">
+		    	<div class="topMenu_line"></div>
+		    </td>
+		  </tr>
+		  <tr>
+		    <td align="center">
+		    	<table width="1000"  border="0" cellpadding="0" cellspacing="0">
+		      		<tr>
+		        		<td height="55">
+		        			<div class="sub_menu" id="menu_dep2_0" style="display: none;">
+		        				<ul>
+		        					<li><a href="shop1.html">Tab Letter White</a></li>
+		        					<li><a href="shop2.html">Tab Letter Color</a></li>
+		        					<li><a href="shop3.html">365 Days Calendar</a></li>
+		        					<li><a href="shop4.html">Special Edition</a></li>
+		        					<li><a href="shop5.html">Baby</a></li>		        					
+		        					<li class="last"><a href="shop6.html">Wedding</a></li>
+		        				</ul>
+		        			</div>
+		        			<div class="sub_menu" id="menu_dep2_1" style="display: none;" >
+		        				<ul>
+		        					<li><a href="store_gallery.html">Store Gallery</a></li>
+		        					<li><a href="store_about.html">About Partner Store</a></li>
+		        					<li class="last"><a href="#">Contact Us</a></li>   					
+		        				</ul>
+		        			</div>
+		        			<div class="sub_menu" id="menu_dep2_2" >
+		        				<ul>
+		        					<li><a href="biz_gallery.html">Biz Gallery</a></li>
+		        					<li class="on"><a href="biz_about.html">About MTC</a></li>
+		        					<li><a href="#">How To Order</a></li>
+		        					<li class="last"><a href="#">Contact Us</a></li>		        					
+		        				</ul>
+		        			</div>
+		        			<div class="sub_menu" id="menu_dep2_3" style="display: none;">
+		        				<ul>
+		        					<li><a href="community_brand_story.html">Brand Story</a></li>
+		        					<li><a href="community_event_list.html">Event</a></li>
+		        					<li><a href="community_notice_list.html">Notice</a></li>
+		        					<li><a href="community_media_list.html">Media</a></li>
+		        					<li class="last"><a href="community_qna.html">Q&A</a></li>		        					
+		        				</ul>
+		        			</div>
+		        		</td>
+		      		</tr>
+		    	</table>
+		    </td>
+		  </tr>
+		  <tr>
+		    <td align="center">
+		    	<div class="topMenu_line"></div>
+		    </td>
+		  </tr>		  
+		  <tr>
+		    <td align="center" height="73"><table width="160" border="0" cellspacing="0" cellpadding="0">
+		      <tr>
+		        <td width="36"><img src="../image/bt_blog.jpg" width="36" height="36" /></td>
+		        <td>&nbsp;</td>
+		        <td width="36"><img src="../image/bt_face.jpg" width="36" height="36" /></td>
+		        <td>&nbsp;</td>
+		        <td width="36"><img src="../image/bt_tweet.jpg" width="36" height="36" /></td>
+		      </tr>
+		    </table></td>
+		  </tr>
+		  <tr>
+		    <td>&nbsp;</td>
+		  </tr>
+		</table>
+		<table width="100%" border="0" cellspacing="0" cellpadding="0">
+		  <tr>
+		    <td valign="top" style="width:250; height:250; background-image: url(../image/gnb_sdw.png) ; background-repeat:repeat-x">&nbsp;</td>
+		    <td width="125" valign="top"><img class="btn" src="../image/gnb_close.png" width="125" height="37" onClick="menuToggle();"/></td>
+		    <td valign="top" style="width:250; height:250; background-image: url(../image/gnb_sdw.png) ; background-repeat:repeat-x">&nbsp;</td>
+		  </tr>
+		</table>
+	</div><!-- topMenu2 -->
+	
+	<!-- 우측상단 링크 -->
+	<div class="top_sub_menu brown">
+		<a href="">로그인</a>
+		<a href=""> | </a>
+		<a href="">회원가입</a>
+		<a href=""> | </a>
+		<a href="">장바구니</a>
+		<a href=""> | </a>
+		<a href="">주문조회</a>
+		<a href=""> | </a>
+		<a href="">Q&A</a>
+	</div>
+	
+	<div class="store_g_title">
+		<img src="../image/biz/about_title.png" alt="" />
+		<h3>최고의 초콜릿 엔터테인먼트</h3>
+	</div>
+	
+	<div class="about_biz1">
+		<div class="text_content">
+			<h3 class="about_1">비즈니스, 초콜릿을 만나다.</h3>
+		</div>		
+	</div>
+	
+	<div class="about_biz bg1">
+		<div class="text_content bg1">
+			<div class="Quote bg1">“</div>
+			<div class="Quote bg2">”</div>
+			<pre class="ab_title">모어댄초콜릿의 좋은 점은,
+고객사에 제안했을 때
+‘반응(Feedback)’이 있다는 겁니다.</pre>
+			<p class="cont_div">-A기업특판업체</p>
+			<pre class="ab_content">수많은 업체가 수없이 많은 제품을 가지고 있는 기업특판업계에서
+모어댄초콜릿의 가치는 더욱 빛을 발합니다. 제안이 성사되기 전에 이미,
+오직 모어댄초콜릿만이 만들 수 있는 이미지 초콜릿으로
+보는 사람의 디자인 감각과 미적 감성을 자극하기 때문입니다.
+
+모어댄초콜릿은 세상의 모든 이미지를 초콜릿으로 구현하는 놀라운 기술력으로
+기업의 아이덴티티와 감성까지 담아낸 독자적인 상품을 준비합니다.
+모어댄초콜릿은 판촉물이나 기념품을 준비하는 모든 기업 뿐 아니라,
+최종적으로 모어댄초콜릿을 선물 받을 기업의 고객까지 생각하여
+보다 더 특별하고 독특한 감성을 전하기 위해 최선을 다합니다.</pre>
+		</div>
+	</div>
+	
+	<div class="about_biz bg2">
+		<div class="text_content bg2">
+			<pre class="ab_title white">사람들은 트랜드라 부르고,
+당신은 기회라 부르게 될 것입니다.</pre>
+			<pre class="ab_content white pt31">세상의 모든 기업들은 스스로의 아이덴티티를 표현하기 위한 형상화된 이미지를 가지고
+있습니다. 한 입 베어문 사과, 즐겁게 지저귀는 새, 빨간 옷을 입고 까만 탄산 음료를
+마시는 산타클로스. 굳이 기업의 이름을 말하지 않아도 우리는 이미지만으로 기업의
+아이덴티티를 인지합니다. 이미지로 자신을 각인시키기 위한 기업의 노력은 늘
+있어왔습니다. 그리고 모어댄초콜릿은 이러한 ‘이미지’를 선물할 수 있는 최적의
+아이템이지요.</pre>
+		</div>
+	</div>
+	
+	<div class="about_biz bg3">
+		<div class="text_content bg3">
+			<pre class="ab_title">아우디에서 빅뱅까지.</pre>
+			<pre class="ab_content pt37">모어댄초콜릿은 비즈니스를 더욱 돋보이게 합니다. 전 세계에서
+오직 모어댄초콜릿만이 만들 수 있는 디자인 초콜릿은, 단순히
+기업의 차원을 넘어 초콜릿을 받는 한 사람 한 사람을 감동시킵니다.
+국내 유명 기업들은 물론, 미국 대사관까지도 모어댄초콜릿을
+선택한 이유이지요.
+
+오직 다크초콜릿과 화이트초콜릿만을 이용해 이미지를 표현하는
+모어댄초콜릿만의 독특한 방식, 초콜릿이라는 이름이 가지고 있는
+사랑스러움과 달콤함으로 기업과 고객에게 특별한 경험을 선사할
+준비가 되어있습니다.</pre>
+		</div>
+	</div>
+</div>
+</body>
+</html>

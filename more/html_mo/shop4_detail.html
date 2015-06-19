@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="euc-kr" />
+<title>More than chocolate</title>
+<meta name="viewport" content="user-scalable=no, initial-scale=0.5, maximum-scale=0.5, minimum-scale=0.5, width=device-width, height=device-height">
+<meta name="format-detection" content="telephone=no, address=no, email=no" />
+ <meta name="keyword" content="초콜릿" /> 
+<meta name="discription" content="초콜릿" />
+
+<meta http-equiv="imagetoolbar" content="no" />
+<meta http-equiv="Expires" content="0" />
+<meta http-equiv="Cache-Control" content="No-Cache" />
+<meta http-equiv="Pragma" content="no-cache" />
+<script src="../js/jquery-1.7.2.min.js"></script>
+<link rel="stylesheet" href="../css/m_main.css?cs=1212" type="text/css"/>
+<link rel="stylesheet" href="../css/m_shop.css?cs=1212" type="text/css"/>
+<script src="../js/jquery.BxSlider.min.js"></script>
+<script src="../js/jquery.corner.js"></script>
+<script type="text/javascript" src="../js/m_common.js"></script>
+<script type="text/javascript" >
+$(document).ready(function(){
+	$('.minus').click(function(){
+		var idx = $('.minus').index(this);
+		
+		var input = $('.num_input').eq(idx);
+		if(input.val() != 0){		
+			var val = parseInt(input.val());
+			input.val( val -1 );
+		}		
+	});
+	$('.plus').click(function(){
+		var idx = $('.plus').index(this);
+		
+		var input = $('.num_input').eq(idx);
+		var val = parseInt(input.val());
+		input.val( val + 1 );
+				
+	});
+	
+	$('select, .sp_select_prod, .btn.shop').corner('keep 7px');
+	
+});
+</script>
+</head>
+<body>
+<div class="navigation">
+	<div class="left menu_btn">		
+	</div>
+	<div class="left logo">
+		<img alt="" src="../mimg/common/logo.png">
+	</div>
+	<div class="left other_btn">
+	</div>
+</div>
+<div class="menu_left">
+	<table class="menu_left_tb">
+		<tbody>
+		<tr>
+			<td><a href=""><img src="../mimg/common/tab1.png"></a></td>
+			<td><a href=""><img src="../mimg/common/tab2.png"></a></td>
+			<td><a href=""><img src="../mimg/common/tab3.png"></a></td>
+			<td><a href=""><img src="../mimg/common/tab4.png"></a></td>
+		</tr>
+		</tbody>
+	</table>
+</div>
+<div class="menu_right">
+	<ul>
+		<li><a href="">로그인</a></li>
+		<li><a href="">회원가입</a></li>
+		<li><a href="">장바구니</a></li>
+		<li><a href="">주문조회</a></li>
+		<li><a href="">Q&A</a></li>
+	</ul>
+</div>
+ <div class="wrap" id="wrapper">
+ 	
+ 	<div class="main_content clear">
+ 		<div class="order_btns">
+ 			<div class="w50 left">
+ 				<img alt="" src="../mimg/shop/back_btn.png">
+ 			</div>
+ 			<div class="w50 right"> 				
+ 			</div>
+ 		</div> 		
+ 		<h3><img src="../mimg/shop/shop4_title.png" class="title_img2"></h3>
+ 		
+ 		<div class="spec_detail">
+ 			<div class="sp_view_img">
+ 				<img alt="" src="../mimg/shop/shop4_ex_img.png">
+ 			</div>
+ 			<div class="sp_select_prod"> 				
+ 				<div class="sp_sct_price">특별한 웨딩 답례품</div>
+ 				<h3>\13,000</h3>
+ 				
+ 				<div class="sp_sct_line"></div>
+ 				
+ 				<div class="spec_option">
+ 					<div class="select_year ta_l">
+		 				<select>
+		 					<option value="">상품선택</option>	 					
+		 				</select>
+		 			</div> 		
+ 				
+ 					<div class="cart_opt spc">
+		 				<div class="left opt_title wfix">웨딩8</div>
+		 				<div class="count_item left">
+	 						<div class="left side_btn minus">
+	 							<img alt="" src="../mimg/member/num_minus.png" >
+	 						</div>
+	 						<div class="left count_input">
+	 							<input type="text" class="num_input" value="0">
+	 						</div>
+	 						<div class="left side_btn plus">
+	 							<img alt="" src="../mimg/member/num_plus.png">
+	 						</div>
+	 					</div><!-- count_item -->
+	 					<div class="prod_price opt_width left">
+	 						<span class="opt_price">\1,000</span>
+	 						<img alt="" src="../mimg/member/cart_del.png" class="item_delete">
+	 					</div> 
+	 					<div class="clear"></div>				
+		 			</div>
+		 			
+		 			<div class="select_year ta_l">
+		 				<select>
+		 					<option value="">상품선택</option>	 					
+		 				</select>
+		 			</div> 		
+	 				
+	 				<div class="cart_opt spc">
+		 				<div class="left opt_title wfix">쇼핑백</div>
+		 				<div class="count_item left">
+	 						<div class="left side_btn minus">
+	 							<img alt="" src="../mimg/member/num_minus.png" >
+	 						</div>
+	 						<div class="left count_input">
+	 							<input type="text" class="num_input" value="0">
+	 						</div>
+	 						<div class="left side_btn plus">
+	 							<img alt="" src="../mimg/member/num_plus.png">
+	 						</div>
+	 					</div><!-- count_item -->
+	 					<div class="prod_price opt_width left">
+	 						<span class="opt_price">\1,000</span>
+	 						<img alt="" src="../mimg/member/cart_del.png" class="item_delete">
+	 					</div> 
+	 					<div class="clear"></div>				
+		 			</div>
+ 				</div><!-- spec_option -->
+ 				
+ 				
+ 			</div><!-- sp_select_prod -->
+ 			
+ 			<div class="sp_select_btns">
+ 				<a href=""><img src="../mimg/shop/twit_btn.png"></a>
+ 				<a href=""><img src="../mimg/shop/facebook_btn.png"></a>
+ 				<a href="" class="btn shop">
+ 					<img alt="" src="../mimg/shop/cart_icon.png" class="cart_icon">
+ 					<span class="cart_text">장바구니 담기</span>
+ 				</a>
+ 			</div>
+ 			
+ 			<div class="sp_content_img clear">
+ 				<img alt="" src="../mimg/shop/shop4_ex_img2.png">
+ 			</div>
+ 			
+ 		</div><!-- spec_detail -->
+ 		
+ 	</div><!-- main_content -->
+ 	
+ 	<div class="footer clear mt80">
+ 		<div class="footer_cont">
+ 			<div class="foot_btns">
+	 			<a href="" class="foot_btn">PC버전</a>
+		 		<a href="" class="foot_btn">로그인</a>
+		 		<a href="" class="foot_btn">맨위로</a>
+		 	</div>
+		 	<div class="foot_agreement">
+		 		<a href="">이용약관</a>
+		 		<a>|</a>
+		 		<a href="">개인정보취급방침</a>
+		 	</div>
+		 	<div class="company">
+		 		<pre>피케이글로벌(대표:강원모) | 주소:인천광역시 계양구 서운사업로 41번길 8
+(서운동,2층) | 고객센터:070-4245-6573 | Fax:032-232-0976 | e-mail:
+info@morethanchocolate.co.kr | 사업자등록번호:122-11-95953 | 
+통신판매업신고:제1012-인천계양-0429호 | 개인정보보호책임자:김현우
+Copyright(C) 2014 morethanchocolate all rights reserved.</pre>
+		 	</div>
+ 		</div>
+	 	 
+	 </div>
+ </div>
+</body>
+</html>

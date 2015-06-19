@@ -1,0 +1,42 @@
+@CHARSET "UTF-8";
+@IMPORT url("common.css");
+.wrapper.intro{
+	background: url("../img/intro/intro_bg.png") center top repeat-x;
+	min-height: 100%;
+}
+.logo{
+	text-align: center;
+	padding-top: 92px;
+	padding-bottom: 50px;
+}
+.intro_btns h4{
+	text-align: center;
+	font-size: 16px;
+	font-weight: bold;
+	padding-bottom: 25px;
+	color: #d5d5d5;
+}
+.skip_btn{
+	text-align: center;
+}
+.box3d{
+	position: absolute;
+}
+.intro_btns{
+	padding-top: 600px;
+	position: absolute;
+	width: 400px;
+	left: 50%;
+	margin-left: -200px;
+}
+.crash_btn{
+	position: fixed;
+	left: 50%;
+	top:50%;
+	width: 350px;
+	height: 350px;
+	margin-left: -175px;
+	margin-top: -175px;
+	cursor: pointer;
+	z-index: 9999;
+}

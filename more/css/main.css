@@ -1,0 +1,37 @@
+@CHARSET "euc-kr";
+@IMPORT url("common.css");
+.bg_container{
+	min-width: 1000px;
+}
+.text_area{
+	position: absolute;
+	padding-left: 10%;
+	padding-top: 32%;
+}
+.text_area h2, .text_area pre{
+	color: #fff;
+}
+.text_area h2{
+	font-size: 80px;
+	padding-bottom: 27px;
+}
+.text_area pre{
+	font-size: 30px;
+	line-height: 40px;
+}
+.main_navi{
+	position: fixed;
+	z-index: 9999;
+	top:45%;
+	right: 29px;
+}
+.main_navi ul li{
+	margin-bottom: 23px;
+	background: url("../image/main/main_nav_f.png") left top no-repeat;
+	width: 19px;
+	height: 20px;
+	cursor: pointer;
+}
+.main_navi ul li.on{
+	background: url("../image/main/main_nav_on.png") left top no-repeat;
+}

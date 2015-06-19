@@ -1,0 +1,323 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=euc-kr" />
+<title>More than chocolate</title>
+<meta name="keyword" content="초콜릿" /> 
+<meta name="discription" content="초콜릿" />
+
+<meta http-equiv="imagetoolbar" content="no" />
+<meta http-equiv="Expires" content="0" />
+<meta http-equiv="Cache-Control" content="No-Cache" />
+<meta http-equiv="Pragma" content="no-cache" />
+<link rel="stylesheet" href="../css/shop.css" type="text/css"/>
+<script src="../js/jquery-1.7.2.min.js"></script>
+<script src="../js/jquery-ui-1.10.4.js"></script>
+<link rel="stylesheet" href="../js/jquery-ui-1.10.4.css" type="text/css"/>
+<script src="../js/jquery.BxSlider.min.js"></script>
+
+<script src="../js/common.js"></script>
+<script type="text/javascript">
+$(document).ready(function() {
+	
+	// 최상단 메뉴 
+	$('.sub_menu ul li').mouseenter(function(){		
+		$(this).addClass('on');
+	});
+	$('.sub_menu ul li').mouseleave(function(){
+		$(this).removeClass('on');
+	});
+
+	$('.price_btn').mouseenter(function(){		
+		var src = $(this).find('img').attr('src');
+		$(this).find('img').attr('src', src.replace('_off','_on'));
+		$(this).find('span.btn.medium').addClass('on');
+	});
+	$('.price_btn').mouseleave(function(){
+		var src = $(this).find('img').attr('src');
+		$(this).find('img').attr('src', src.replace('_on','_off'));
+		$(this).find('span.btn.medium').removeClass('on');
+	});
+	
+	// 미리보기
+	$('.recomm_list4 ul li').click(function(){
+		$('#review').show();
+		$('#review').css('z-index', 10002);
+		$('.mask').fadeTo("fast", 0.7);
+	});
+	
+	$('#review_hide, .mask').click(function(){
+		$('#review').hide();
+		$('#review').css('z-index', -1);
+		$('.mask').hide();
+	});
+	
+	// 슬라이드
+	var slider = $('.review_slide_ul').bxSlider({
+		auto: false,
+		speed : 400,
+		controls :false,
+		pager:false,
+		infiniteLoop : true
+	});	
+	
+	$('.slide_left').click(function(){
+		slider.goToPrevSlide();
+      return false;
+    });
+
+    $('.slide_right').click(function(){
+    	slider.goToNextSlide();
+      return false;
+    });
+    
+    $('.sw_review').hide();
+    
+    $('.mask').click(function(){
+    	$('#price').hide();
+    	$('.mask').hide();
+    });
+});
+
+function showPrice(){
+	$('#price').show();
+	$('.mask').fadeTo("fast", 0.7);
+}
+function hidePrice(){
+	$('#price').hide();
+	$('.mask').hide();
+}
+
+</script>
+</head>
+<body>
+<div id="wrap" style="z-index:0">
+	<!-- Top Menu -->
+	<div id="topMenu1" style="position:fixed;top:0px;left:50%;margin-left:-61px;z-index:100;">
+		<img class="btn" src="../image/mark_close.png" width="135" height="124" onClick="menuToggle()"/>
+	</div>
+	<div id="topMenu2" style="position:fixed;top:0px;width:100%;z-index:200;display:none;min-width:1000px">
+		<table width="100%" border="0" align="center" cellpadding="0" cellspacing="0" bgcolor="#483729">
+		  <tr>
+		    <td><div align="center"><a href="#"><img src="../image/mark_01.jpg" width="174" height="126" align="middle" /></a></div></td>
+		  </tr>
+		  <tr>
+		    <td align="center">
+			    <div class="topMenu_line"></div>
+		    </td>
+		  </tr>
+		  <tr>
+		    <td height="130" align="center">		    	
+		    	<table id="menuTbl" width="800" border="0" cellspacing="0" cellpadding="0">
+		      		<tr>
+				         <td width="91" class="on"><a href="shop_main.html"><img src="../image/menu_01_ov.jpg" width="91" height="107" class="top_btns on"/></a></td>
+				        <td>&nbsp;</td>
+				        <td width="91"><a href="store_main.html"><img src="../image/menu_02_nm.jpg" width="91" height="107" class="top_btns"/></a></td>
+				        <td>&nbsp;</td>
+				        <td width="91"><a href="biz_main.html"><img src="../image/menu_03_nm.jpg"  width="91" height="107" class="top_btns"/></a></td>
+				        <td>&nbsp;</td>
+				        <td width="91"><a href="community_main.html"><img src="../image/menu_04_nm.jpg" width="91" height="107" class="top_btns"/></a></td>
+			      </tr>
+		    	</table>
+		    </td>
+		  </tr>
+		  <tr>
+		    <td align="center">
+		    	<div class="topMenu_line"></div>
+		    </td>
+		  </tr>
+		  <tr>
+		    <td align="center">
+		    	<table width="1000"  border="0" cellpadding="0" cellspacing="0">
+		      		<tr>
+		        		<td height="55">
+		        			<div class="sub_menu" id="menu_dep2_0" >
+		        				<ul>
+		        					<li><a href="shop1.html">Tab Letter White</a></li>
+		        					<li><a href="shop2.html">Tab Letter Color</a></li>
+		        					<li><a href="shop3.html">365 Days Calendar</a></li>
+		        					<li><a href="shop4.html">Special Edition</a></li>
+		        					<li class="on"><a href="shop5.html">Baby</a></li>		        					
+		        					<li class="last"><a href="shop6.html">Wedding</a></li>
+		        				</ul>
+		        			</div>
+		        			<div class="sub_menu" id="menu_dep2_1" style="display: none;" >
+		        				<ul>
+		        					<li><a href="store_gallery.html">Store Gallery</a></li>
+		        					<li><a href="store_about.html">About Partner Store</a></li>
+		        					<li class="last"><a href="#">Contact Us</a></li>   					
+		        				</ul>
+		        			</div>
+		        			<div class="sub_menu" id="menu_dep2_2" style="display: none;">
+		        				<ul>
+		        					<li><a href="biz_gallery.html">Biz Gallery</a></li>
+		        					<li><a href="biz_about.html">About MTC</a></li>
+		        					<li><a href="#">How To Order</a></li>
+		        					<li class="last"><a href="#">Contact Us</a></li>		        					
+		        				</ul>
+		        			</div>
+		        			<div class="sub_menu" id="menu_dep2_3" style="display: none;">
+		        				<ul>
+		        					<li><a href="community_brand_story.html">Brand Story</a></li>
+		        					<li><a href="community_event_list.html">Event</a></li>
+		        					<li><a href="community_notice_list.html">Notice</a></li>
+		        					<li><a href="community_media_list.html">Media</a></li>
+		        					<li class="last"><a href="community_qna.html">Q&A</a></li>		        					
+		        				</ul>
+		        			</div>
+		        		</td>
+		      		</tr>
+		    	</table>
+		    </td>
+		  </tr>
+		  <tr>
+		    <td align="center">
+		    	<div class="topMenu_line"></div>
+		    </td>
+		  </tr>		  
+		  <tr>
+		    <td align="center" height="73"><table width="160" border="0" cellspacing="0" cellpadding="0">
+		      <tr>
+		        <td width="36"><img src="../image/bt_blog.jpg" width="36" height="36" /></td>
+		        <td>&nbsp;</td>
+		        <td width="36"><img src="../image/bt_face.jpg" width="36" height="36" /></td>
+		        <td>&nbsp;</td>
+		        <td width="36"><img src="../image/bt_tweet.jpg" width="36" height="36" /></td>
+		      </tr>
+		    </table></td>
+		  </tr>
+		  <tr>
+		    <td>&nbsp;</td>
+		  </tr>
+		</table>
+		<table width="100%" border="0" cellspacing="0" cellpadding="0">
+		  <tr>
+		    <td valign="top" style="width:250; height:250; background-image: url(../image/gnb_sdw.png) ; background-repeat:repeat-x">&nbsp;</td>
+		    <td width="125" valign="top"><img class="btn" src="../image/gnb_close.png" width="125" height="37" onClick="menuToggle();"/></td>
+		    <td valign="top" style="width:250; height:250; background-image: url(../image/gnb_sdw.png) ; background-repeat:repeat-x">&nbsp;</td>
+		  </tr>
+		</table>
+	</div><!-- topMenu2 -->
+	
+	<!-- 우측상단 링크 -->
+	<div class="top_sub_menu">
+		<a href="">로그인</a>
+		<a href=""> | </a>
+		<a href="">회원가입</a>
+		<a href=""> | </a>
+		<a href="">장바구니</a>
+		<a href=""> | </a>
+		<a href="">주문조회</a>
+		<a href=""> | </a>
+		<a href="">Q&A</a>
+	</div>
+	
+	<!-- 미리보기 -->
+	<div class="mask"></div>
+	<div class="sw_review" id="price">
+		<div class="price_info">
+			<img src="../image/shop/upload_close.png" alt="" onclick="hidePrice();"/>
+		</div>
+		<img src="../image/shop/price_detail.png" alt="" />
+	</div>
+	<div class="sw_review" id="review">
+		<div class="review_title">
+			<span class="rv_tit_1">Birthday</span>
+			<span class="rv_tit_2">생일</span>
+			<img src="../image/shop/rv_close_btn.png" alt="" class="rv_close_btn" id="review_hide"/>
+		</div>
+		<div class="review_slide_btn">
+			<img src="../image/shop/rv_slide_left.png" alt="" class="slide_left"/>
+			<img src="../image/shop/rv_slide_right.png" alt="" class="slide_right"/>
+		</div>
+		<div class="review_slide">
+			<ul class="review_slide_ul">
+				<li><img src="../image/shop/review_ex.png"  width="1000"/></li>
+				<li><img src="../image/shop/review_ex.png"  width="1000"/></li>
+				<li><img src="../image/shop/review_ex.png"  width="1000"/></li>
+				<li><img src="../image/shop/review_ex.png"  width="1000"/></li>
+				<li><img src="../image/shop/review_ex.png"  width="1000"/></li>
+			</ul>
+		</div>
+	</div>
+	
+	<!-- 내용 -->
+	<div class="shop_white">
+		
+		<!-- 타이틀 이미지 -->
+		<div class="sw_title bg4">
+			<div class="sw_price bg4">
+				<div class="price_btn type2">
+					<img src="../image/shop/cart_icon_off.png" alt="" class="cart_icon"/>
+					<a href="shop5_order.html?s=3"><span class="btn medium">\3,500 ~ </span></a>					
+				</div>
+				<div class="price_btn type2">
+					<img src="../image/shop/cart_icon_off.png" alt="" class="cart_icon"/>
+					<a href="shop5_order.html?s=2"><span class="btn medium">\2,700 ~ </span></a>
+				</div>
+				<div class="price_btn type2">
+					<img src="../image/shop/cart_icon_off.png" alt="" class="cart_icon"/>
+					<a href="shop5_order.html?s=4"><span class="btn medium">\4,600 ~ </span></a>
+				</div>
+				<div class="price_btn type2">					
+					<img src="../image/shop/shop5_icon_off.png" alt="" class="cart_icon"/>
+					<a href="javascript:showPrice()"><span class="btn medium">가격정보</span></a>
+				</div>
+				<div class="price_btn type2">
+					<img src="../image/shop/shop5_icon_off.png" alt="" class="cart_icon"/>
+					<a href="javascript:showPrice()"><span class="btn medium">가격정보 </span></a>					
+				</div>
+				<div class="price_btn type2">			
+					<img src="../image/shop/shop5_icon_off.png" alt="" class="cart_icon"/>
+					<a href="javascript:showPrice()"><span class="btn medium">가격정보 </span></a>
+				</div>
+			</div>
+		</div>
+		<!-- 추천 품목 -->		
+		
+		<div class="sw_recommend">
+			<div class="customize">
+				<img src="../image/shop/shop5_tit_img2.png" alt="" />
+			</div>
+		
+			<h3 class="recomm_title"><img src="../image/shop/recom_title.png" /></h3>
+			<h4 class="recomm_subtitle">상황에 맞는 초콜릿 조합을 확인하세요.</h4>
+			<!-- 
+			<h4 class="shop_color_tit">상황에 맞는 초콜릿 조합을 확인하세요.</h4>
+			<h4 class="shop_color_tit2"><a href="#">초콜릿 고르러 가기 ▶</a></h4>
+			 -->
+			<div class="recomm_list4">
+				<ul>
+					<li>
+						<div class="recom_bg bg7">
+							<div class="recom_tit2">초콜릿 4구</div>
+							<div class="recom5_bg">
+								<img src="../image/shop/recomm5_ex1.png" alt="" />
+							</div>
+						</div>
+					</li>
+					<li>
+						<div class="recom_bg bg8">
+							<div class="recom_tit2">초콜릿 6구</div>
+							<div class="recom5_bg">
+								<img src="../image/shop/recomm5_ex2.png" alt="" />
+							</div>
+						</div>
+					</li>
+					<li>
+						<div class="recom_bg bg8">
+							<div class="recom_tit2">초콜릿 8구</div>
+							<div class="recom5_bg">
+								<img src="../image/shop/recomm5_ex3.png" alt="" />
+							</div>
+						</div>
+					</li>				
+				</ul>
+			</div>
+			<div class="clear"></div>
+		</div><!-- sw_recommend -->		
+	</div>
+
+</div>
+</body>
+</html>

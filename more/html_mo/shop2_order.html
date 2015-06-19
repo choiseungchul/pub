@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="euc-kr" />
+<title>More than chocolate</title>
+<meta name="viewport" content="user-scalable=no, initial-scale=0.5, maximum-scale=0.5, minimum-scale=0.5, width=device-width, height=device-height">
+<meta name="format-detection" content="telephone=no, address=no, email=no" />
+ <meta name="keyword" content="초콜릿" /> 
+<meta name="discription" content="초콜릿" />
+
+<meta http-equiv="imagetoolbar" content="no" />
+<meta http-equiv="Expires" content="0" />
+<meta http-equiv="Cache-Control" content="No-Cache" />
+<meta http-equiv="Pragma" content="no-cache" />
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+<link rel="stylesheet" href="../css/m_main.css?cs=1212" type="text/css"/>
+<link rel="stylesheet" href="../css/m_shop.css?cs=1212" type="text/css"/>
+<script src="../js/jquery.BxSlider.min.js"></script>
+<script src="../js/jquery.corner.js"></script>
+<script type="text/javascript" src="../js/m_common.js"></script>
+
+
+<script type="text/javascript" >
+var elSize = 150;
+var moveDistance = 135;
+var slideSpeed = 300;
+var mSize = 3;
+
+var isImageUpload = false;
+
+$(document).ready(function(){
+	//$('ul').roundabout();
+	
+	// 조합칸 생성
+	var query = location.search;
+	
+	if(query != ''){
+		 var size = query.split('s=')[1];
+		 chocoboxInit(size, size);
+		 mSize = size;		 
+	}else{
+		 chocoboxInit(3, 3);
+	}
+	
+	slideInit();
+	
+	$('#pic_left').click(function(){
+		var idx = $('.item_slide').index($('.item_slide:visible'));
+		
+		if(curr_idx[idx] != 0){
+			var next = curr_idx[idx]-1;
+			$('.image_wrap:eq('+idx+')').stop(true, true).animate({
+				left : -(next * moveDistance)
+			},slideSpeed);
+			imageSizeChange(idx, next);
+			curr_idx[idx] -= 1;			
+		}
+		
+	});
+	$('#pic_right').click(function(){
+		var idx = $('.item_slide').index($('.item_slide:visible'));
+		
+		if(curr_idx[idx] < (slide_leng[idx] -1)){
+			var next = curr_idx[idx]+1;
+			$('.image_wrap:eq('+idx+')').stop(true, true).animate({
+				left : -(next * moveDistance)
+			},slideSpeed);
+			imageSizeChange(idx, next);
+			curr_idx[idx] += 1;
+		}
+		
+	});
+	
+	$('.choco_tabs div.left').click(function(){
+		var idx = $('.choco_tabs div.left').index(this);
+		
+		$('.choco_tabs div.left').removeClass('on');
+		$(this).addClass('on');
+		
+		$('.item_slide').hide();
+		$('.item_slide').eq(idx).show();
+		
+		$('.tab_bottom').hide();
+		$('.tab_bottom').eq(idx).show();
+	});
+	
+	$('.item_slide').hide();
+	$('.item_slide:eq(0)').show();
+	
+	
+	$('.product_set ul li:not(".imgupload")').click(function(){
+		$('.clicked').removeClass('clicked').children().remove('.set');
+		$(this).addClass('clicked');
+		
+		var selected_obj = $('.dummy').clone();
+		selected_obj.addClass('set');
+		$(this).prepend(selected_obj);
+	});
+	
+	$('img.big').live('click',function(){
+		var seq = $('.item_slide').index($('.item_slide:visible'));
+		var idx = $('.image_wrap:eq('+seq+') img').index(this);		
+		input_choco(seq, idx);
+	});
+	
+	$('#insert').click(function(){
+		var seq = $('.item_slide').index($('.item_slide:visible'));
+		var idx = $('.image_wrap:eq('+seq+') img').index($('.image_wrap:eq('+seq+') img.big'));
+		input_choco(seq, idx);
+	});
+	
+	// 이미지 업로드
+	$('.img_up_file_icon').click(function(){
+		$('.find_imgfile').trigger('click');
+	});
+	$('.upload_tab_bg').click(function(){
+		var idx=$('.upload_tab_bg').index(this);
+		$('.upload_tab_bg').removeClass('on');
+		$(this).addClass('on');
+		
+		$('.img_up_content').hide();
+		$('.img_up_content').eq(idx).show();
+	});	
+	$('.upload_tab_bg, .btn.bg1, .img_up_content, .btn.bg3, .input_bg1').corner('keep 5px');
+});
+
+var curr_idx = new Array(3);
+var slide_leng = new Array(3);
+
+function input_choco(seq, idx){
+	var choco = $('.image_wrap:eq('+seq+') img:eq('+idx+')').clone();
+	choco.css('width','132px');
+	choco.css('height','132px');
+	choco.addClass('inner');
+	$('.clicked').empty().prepend(choco);
+	
+	if(mSize == 3){
+		if($('.product_set ul li img.inner').length == 5){
+			if(isImageUpload)
+			showComplete();
+		}
+	}else if(mSize == 4){
+		if($('.product_set ul li img.inner').length == 12){
+			if(isImageUpload)
+			showComplete();
+		}
+	}	
+}
+
+function showComplete(){
+	$('.mask').css('height',$(document).height()).fadeTo('fast', 0.7);
+	$('.complete_layer').show();
+}
+
+function resetChocoBox(){
+	$('.complete_layer').hide();
+	$('.mask').hide();
+	closeUploadLayer();
+	isImageUpload = false;
+	
+	$('.product_set ul li').empty().removeClass('clicked');
+	
+	
+	if(mSize == 3){
+		$('#m_2_2').css({width:264+'px',height:264+'px'}).append('<img src="../mimg/shop/upload_2x2.png" onclick="showUploadLayer()" class="upload_btn">').addClass('imgupload');		
+	}else if(mSize == 4){
+		$('#m_3_3').css({width:264+'px',height:264+'px'}).append('<img src="../mimg/shop/upload_2x2.png" onclick="showUploadLayer()" class="upload_btn">').addClass('imgupload');
+	}
+	
+	$('#chocobox li').eq(0).addClass('clicked')
+	var selected_obj = $('.dummy').clone();
+	selected_obj.addClass('set');
+	$('#chocobox li').eq(0).prepend(selected_obj);
+}
+
+function slideInit(){
+	$('.image_wrap').each(function(idx){
+		var length = $('.image_wrap:eq('+idx+') img').length;
+		$('.image_wrap:eq('+idx+')').width(length * elSize) + (elSize * 10);
+		slide_leng[idx] = length;
+		curr_idx[idx] = 0;
+	});
+}
+
+
+
+function imageSizeChange(seq, idx){
+	if(idx < slide_leng[seq]){
+		$('.image_wrap:eq('+seq+') img').removeClass('big');
+		$('.image_wrap:eq('+seq+') img').eq(idx).addClass('big');
+	}	
+}
+
+function chocoboxInit(x, y){
+	if(x != y) {
+		return;
+	}
+	
+	if(x == 4){
+		$('.product_set').removeClass('color-3x3').addClass('color-4x4');
+		$('.complete_layer').removeClass('c3x3').addClass('c4x4');
+	}else if(x == 3){
+		$('.product_set').removeClass('color-4x4').addClass('color-3x3');
+		$('.complete_layer').removeClass('c4x4').addClass('c3x3');
+	}
+	
+	$('.product_set').empty();
+	
+	$('.product_set').append('<ul id="chocobox"></ul>');
+	for(var i = 0 ; i < x*y ; i++){
+		$('#chocobox').append("<li></li>");
+	}
+	
+	$('#chocobox li').each(function(e){
+		var idx = $('#chocobox li').index(this);
+		var _x = parseInt(idx % x);
+		var _y = parseInt(idx / y);
+		$(this).css({
+			marginLeft : (_x*132) + 'px',
+			marginTop : (_y*132) + 'px'
+		});
+		
+		_x+=1;
+		_y+=1;
+		
+		$(this).attr('id','m_' + _x + '_' + _y);
+	});
+	
+	if(x == 3){
+		$('#m_2_2').css({width:264+'px',height:264+'px'}).append('<img src="../mimg/shop/upload_2x2.png" onclick="showUploadLayer()" class="upload_btn">').addClass('imgupload');		
+	}else if(x == 4){
+		$('#m_3_3').css({width:264+'px',height:264+'px'}).append('<img src="../mimg/shop/upload_2x2.png" onclick="showUploadLayer()" class="upload_btn">').addClass('imgupload');
+	}
+	
+	$('#chocobox li').eq(0).addClass('clicked')
+	var selected_obj = $('.dummy').clone();
+	selected_obj.addClass('set');
+	$('#chocobox li').eq(0).prepend(selected_obj);
+	
+}
+
+function showUploadLayer(){
+	$('.mask').css('height',$(document).height()).fadeTo('fast', 0.7);
+	$('.image_upload').show();
+}
+function closeUploadLayer(){
+	$('.mask').hide();
+	$('.image_upload').hide();
+}
+function setImageUploadComplete(){
+	closeUploadLayer();
+	var comp_div = '<div class="upload_complete c2x2"><p>보내주신 사진은</p><p>모어댄초콜릿 디자이너들이</p><p>예쁘게 다시 편집해드립니다!</p></div>';
+	
+	$('.imgupload').prepend(comp_div);
+	
+	isImageUpload = true;
+	
+	if(mSize == 3){
+		if($('.product_set ul li img.inner').length == 5){
+			showComplete();
+		}
+	}else if(mSize == 4){
+		if($('.product_set ul li img.inner').length == 12){			
+			showComplete();
+		}
+	}	
+}
+
+</script>
+</head>
+<body>
+<div style="display: none;">
+	<span class="selected dummy"></span>
+</div>
+<div class="navigation">
+	<div class="left menu_btn">		
+	</div>
+	<div class="left logo">
+		<img alt="" src="../mimg/common/logo.png">
+	</div>
+	<div class="left other_btn">
+	</div>
+</div>
+<div class="menu_left">
+	<table class="menu_left_tb">
+		<tbody>
+		<tr>
+			<td><a href=""><img src="../mimg/common/tab1.png"></a></td>
+			<td><a href=""><img src="../mimg/common/tab2.png"></a></td>
+			<td><a href=""><img src="../mimg/common/tab3.png"></a></td>
+			<td><a href=""><img src="../mimg/common/tab4.png"></a></td>
+		</tr>
+		</tbody>
+	</table>
+</div>
+<div class="menu_right">
+	<ul>
+		<li><a href="">로그인</a></li>
+		<li><a href="">회원가입</a></li>
+		<li><a href="">장바구니</a></li>
+		<li><a href="">주문조회</a></li>
+		<li><a href="">Q&A</a></li>
+	</ul>
+</div>
+ <div class="wrap" id="wrapper">
+ 	
+ 	<div class="mask"></div>
+ 	
+ 	<div class="image_upload">
+ 		<div class="img_up_tabs">
+ 			<div class="left upload_tab_bg on">
+ 				<img alt="" src="../mimg/shop/camera_icon.png" class="img_up_icon">
+ 				<span class="img_up_text">사진 초콜릿</span>
+ 			</div>
+ 			<div class="left upload_tab_bg">
+ 				<img alt="" src="../mimg/shop/letter_icon.png" class="img_up_icon">
+ 				<span class="img_up_text">편지지 초콜릿</span>
+ 			</div>
+ 		</div>
+ 		
+ 		
+ 		<div class="img_up_content">
+ 			<div class="btn bg3 pb21"> 				
+ 				<img alt="" src="../mimg/shop/upload_btn_icon.png" class="img_up_file_icon">			
+ 				<input type="file" class="find_imgfile">
+ 			</div>
+ 			<div class="img_msg_text">
+ 				<input type="text" class="input_bg1">
+ 			</div>
+ 			<div class="img_msg_limit">0/25</div>
+ 			<div class="img_up_line"></div>
+ 			
+ 			<div class="img_up_ok_btn">
+ 				<a href="javascript:setImageUploadComplete()" class="btn bg1 on">완료</a>
+ 			</div> 			
+ 		</div>
+ 		
+ 		<div class="img_up_content" style="display: none;">
+ 			<div class="image_up_letter">
+ 				<img alt="" src="../mimg/shop/image_up_letter.png">
+ 			</div>
+ 			<div class="image_up_letter_textarea">
+ 				<textarea rows="" cols="" class="ta_bg1"></textarea>
+ 			</div>
+ 			<div class="img_msg_limit">0/100</div>
+ 			<div class="img_up_line"></div>
+ 			
+ 			<div class="img_up_ok_btn">
+ 				<a href="javascript:setImageUploadComplete()" class="btn bg1 on">완료</a>
+ 			</div> 			
+ 			
+ 		</div>
+ 	</div>
+ 	
+ 	<div class="main_content clear">
+ 		<div class="order_btns">
+ 			<div class="w50 left">
+ 				<img alt="" src="../mimg/shop/back_btn.png">
+ 			</div>
+ 			<div class="w50 right">
+ 				<img alt="" src="../mimg/shop/reset_btn.png" onclick="resetChocoBox();">
+ 			</div>
+ 		</div>
+ 		<h3 class="clear"><img src="../mimg/shop/shop2_title.png" class="title_img2"></h3>
+ 		
+ 		<div class="complete_layer c3x3">
+ 			<div class="complete_size" ></div> 		
+	 		<div class="cp_buy_btn">
+	 			<a href="" class="btn normal">선택 완료</a>
+	 		</div>
+	 		<div class="cp_sns_btn">
+	 			<a href="#"><img src="../mimg/shop/reset_s_btn.png" onclick="resetChocoBox();"></a>
+	 			<a href="#"><img src="../mimg/shop/twit_s_btn.png"></a>
+	 			<a href="#"><img src="../mimg/shop/fb_s_btn.png"></a>
+	 		</div>
+	 	</div>
+ 		<div class="product_set white-3x3">	
+ 			
+ 		</div>
+ 		
+ 		<div class="choco_tabs">
+ 			<div class="left on">
+ 				<span>알파벳 & 숫자</span>
+ 				<div class="tab_bottom"></div>
+ 			</div>
+ 			<div class="left">
+ 				<span>작은 이미지</span>
+ 				<div class="tab_bottom" style="display: none;"></div>
+ 			</div>
+ 			<div class="left">
+ 				<span>큰 이미지</span>
+ 				<div class="tab_bottom" style="display: none;"></div>
+ 			</div>
+ 		</div>
+ 		
+ 		<div class="item_slide_cont">
+ 			<div class="item_slide_btn">
+ 				<img alt="" src="../mimg/shop/slide_left.png" class="item_slide_btn_left" id="pic_left">
+ 				<span id="insert" ></span>
+ 				<img alt="" src="../mimg/shop/slide_right.png" class="item_slide_btn_right" id="pic_right">
+ 			</div>
+ 			<div class="item_slide"> 				
+ 				<div class="image_wrap">
+					<img src="../mimg/shop/alphabet/a_input.png" title="0" class="big">
+					<img src="../mimg/shop/alphabet/a_input.png" title="0">
+					<img src="../mimg/shop/alphabet/a_input.png" title="0">
+					<img src="../mimg/shop/alphabet/a_input.png" title="0">
+					<img src="../mimg/shop/alphabet/a_input.png" title="0">
+					<img src="../mimg/shop/alphabet/a_input.png" title="0">
+					<img src="../mimg/shop/alphabet/a_input.png" title="0">
+					<img src="../mimg/shop/alphabet/a_input.png" title="0">
+					<img src="../mimg/shop/alphabet/a_input.png" title="0">
+					<img src="../mimg/shop/alphabet/a_input.png" title="0">
+					<img src="../mimg/shop/alphabet/a_input.png" title="0">
+ 				</div>
+ 						
+ 			</div>
+ 			<div class="item_slide">
+ 				<div class="image_wrap">
+					<img src="../mimg/shop/alphabet/a_input.png" title="0" class="big">
+					<img src="../mimg/shop/alphabet/a_input.png" title="0">
+					<img src="../mimg/shop/alphabet/a_input.png" title="0">
+					<img src="../mimg/shop/alphabet/a_input.png" title="0">
+					<img src="../mimg/shop/alphabet/a_input.png" title="0">
+					<img src="../mimg/shop/alphabet/a_input.png" title="0">
+					<img src="../mimg/shop/alphabet/a_input.png" title="0">
+					<img src="../mimg/shop/alphabet/a_input.png" title="0">
+					<img src="../mimg/shop/alphabet/a_input.png" title="0">
+					<img src="../mimg/shop/alphabet/a_input.png" title="0">
+					<img src="../mimg/shop/alphabet/a_input.png" title="0">
+					<img src="../mimg/shop/alphabet/a_input.png" title="0">
+					<img src="../mimg/shop/alphabet/a_input.png" title="0">
+					<img src="../mimg/shop/alphabet/a_input.png" title="0">
+					<img src="../mimg/shop/alphabet/a_input.png" title="0">
+					<img src="../mimg/shop/alphabet/a_input.png" title="0">
+					<img src="../mimg/shop/alphabet/a_input.png" title="0">
+					<img src="../mimg/shop/alphabet/a_input.png" title="0">
+					<img src="../mimg/shop/alphabet/a_input.png" title="0">
+ 				</div>
+ 			</div>
+ 			<div class="item_slide">
+ 				<div class="image_wrap">
+					<img src="../mimg/shop/alphabet/a_input.png" title="0" class="big">
+					<img src="../mimg/shop/alphabet/a_input.png" title="0">
+					<img src="../mimg/shop/alphabet/a_input.png" title="0">
+					<img src="../mimg/shop/alphabet/a_input.png" title="0">
+					<img src="../mimg/shop/alphabet/a_input.png" title="0">
+					<img src="../mimg/shop/alphabet/a_input.png" title="0">
+					<img src="../mimg/shop/alphabet/a_input.png" title="0">
+ 				</div>
+ 			</div>
+ 		</div>
+ 		
+ 	</div><!-- main_content -->
+ 	
+ 	<div class="footer clear">
+ 		<div class="footer_cont">
+ 			<div class="foot_btns">
+	 			<a href="" class="foot_btn">PC버전</a>
+		 		<a href="" class="foot_btn">로그인</a>
+		 		<a href="" class="foot_btn">맨위로</a>
+		 	</div>
+		 	<div class="foot_agreement">
+		 		<a href="">이용약관</a>
+		 		<a>|</a>
+		 		<a href="">개인정보취급방침</a>
+		 	</div>
+		 	<div class="company">
+		 		<pre>피케이글로벌(대표:강원모) | 주소:인천광역시 계양구 서운사업로 41번길 8
+(서운동,2층) | 고객센터:070-4245-6573 | Fax:032-232-0976 | e-mail:
+info@morethanchocolate.co.kr | 사업자등록번호:122-11-95953 | 
+통신판매업신고:제1012-인천계양-0429호 | 개인정보보호책임자:김현우
+Copyright(C) 2014 morethanchocolate all rights reserved.</pre>
+		 	</div>
+ 		</div>
+	 	 
+	 </div>
+ </div>
+</body>
+</html>

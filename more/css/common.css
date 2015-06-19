@@ -1,0 +1,446 @@
+@charset "euc-kr";
+
+@import url(http://fonts.googleapis.com/earlyaccess/nanumgothic.css);
+
+/* body 공통 속성 */
+/* body,div,ul,li,dl,dt,dd,ol,p,h1,h2,h3,h4,h5,h6,form {margin:0;padding:0} */
+body,h1,h2,h3,h4,input,button,pre,p,select,em{font-family:NanumGothic,dotum;font-size:12px;}
+* {
+	margin: 0;
+	padding: 0;
+}
+
+body {
+	background:#fff;
+	overflow-x:hidden;
+}
+
+h1,h2,h3,h4,h5,h6{
+	color: #483729;
+}
+
+ul,ol,dl {list-style:none}
+img {border:0;vertical-align:top;}
+ul {list-style:none; padding:0; margin:0;}
+img,fieldset,iframe,frame{border:0px none;}
+img{vertical-align: middle;}
+li{list-style:none}
+input,select,button{vertical-align:middle;margin: 0;padding: 0 }
+i,em,address{font-style:normal}
+button{margin:0;padding:0}
+a{color:#666;text-decoration:none}
+button *{position:relative}
+button img{left:-3px;*left:auto;}
+option{padding-right:6px}
+hr{display:none}
+legend{*width:0}
+table{/* border-collapse:collapse;table-layout:fixed; */border-collapse:collapse;border-spacing:0}
+
+pre{
+	margin:0;
+	padding:0;
+	word-wrap: break-word; /* IE 5+ */
+	white-space: pre; /* CSS 2.0 */
+	white-space: pre-wrap; /* CSS 2.1 */
+	white-space: pre-line; /* CSS 3.0 */
+	white-space: -pre-wrap; /* Opera 4-6 */
+	white-space: -o-pre-wrap; /* Opera 7 */
+	white-space: -moz-pre-wrap; /* Mozilla */	
+}
+
+
+.white{color: #fff !important}
+.brown{color: #483729 !important}
+.pt22{padding-top: 22px !important}
+.pt66{padding-top: 66px !important}
+.po_ab{position: absolute;}
+.pt31{padding-top: 31px !important}
+.pt37{padding-top: 37px !important}
+.pb22{padding-bottom: 22px !important}
+.mt53{margin-top: 53px !important}
+.mt16{margin-top: 16px !important}
+.mb200{margin-bottom: 200px !important}
+.pl19{padding-left: 19px !important}
+.pb62{padding-bottom: 62px !important;}
+
+.skyblue{color: #00b3e3 !important}
+
+.opa_3{
+	/* IE 8 */
+  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=30)";
+
+  /* IE 5-7 */
+  filter: alpha(opacity=30);
+
+  /* Netscape */
+  -moz-opacity: 0.3;
+
+  /* Safari 1.x */
+  -khtml-opacity: 0.3;
+
+  /* Good browsers */
+  opacity: 0.3;
+}
+
+.opa_5{
+	/* IE 8 */
+  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=50)";
+
+  /* IE 5-7 */
+  filter: alpha(opacity=50);
+
+  /* Netscape */
+  -moz-opacity: 0.5;
+
+  /* Safari 1.x */
+  -khtml-opacity: 0.5;
+
+  /* Good browsers */
+  opacity: 0.5;
+}
+
+.opa_7{
+	/* IE 8 */
+  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=70)";
+
+  /* IE 5-7 */
+  filter: alpha(opacity=70);
+
+  /* Netscape */
+  -moz-opacity: 0.7;
+
+  /* Safari 1.x */
+  -khtml-opacity: 0.7;
+
+  /* Good browsers */
+  opacity: 0.7;
+}
+
+/* 그외 공통 */
+#topMenu1{
+	position:fixed;
+	top:0px;
+	left:50%;
+	margin-left:-61px;
+	z-index:100;
+	min-width:132px;
+}
+#topMenu2{
+	position:fixed;
+	top:0px;
+	width:100%;
+	z-index:30200;
+	display:none;
+	min-width:1000px;
+	margin: 0 auto;
+}
+.topMenu_line{
+	background: url("../image/dot_gnb.png") left top repeat-x;
+	height: 1px;
+	width: 1000px;
+}
+.btn {cursor:pointer;}
+
+.left{float: left;}
+.right{float: right;	}
+.clear{clear: both;}
+
+.myButton{
+    background:url(../image/button_choco.png) no-repeat;
+    cursor:pointer;
+    border:none;
+    width:144px;
+    height:46px;
+    /*text-indent:50px;*/
+    color: #fff;
+    font-size:14pt;
+    cursor: pointer;
+}
+
+.myButton:hover 
+{   
+    background:url(../image/button_blue.png) no-repeat;
+}
+
+
+.txt1 {
+	font-size:25px;
+}
+
+.txt2 {
+	font-size:14px;
+	line-height:50px
+}
+
+/*
+input {
+	vertical-align: middle;
+}
+*/
+
+
+
+
+
+/*
+html, body {
+	margin:0; 
+	padding:0; 
+	font-family:"돋움",Dotum,arial,sans-serif;
+	font-size:12px;
+	color:#666;
+	height:100%;
+}
+
+tr, td, table{
+	margin:0;
+	padding:0;
+	font-family:"돋움",Dotum,arial,sans-serif;
+	font-size:12px;
+	color:#666; 
+	overflow-y: auto;
+	text-align: left; 
+	border:0 none;
+	border-spacing:0;
+	border-style:none;
+}
+
+a{color:#828282;text-decoration:none;}
+a:link,a:visited{color:#666;text-decoration:none;} 
+a:hover{text-decoration:none; color:#666;}
+a:active{text-decoration:none;}
+*/
+
+
+
+/* Layout */
+#wrap {margin:0 auto; width:100%; background:#fff;}  <!-- background:#000; background:yellow; -->
+
+/* 공통 네비 */
+.sub_menu{
+	height: 35px;
+	padding-top: 20px;
+	padding-left: 25px;
+	padding-right: 25px;
+}
+.sub_menu ul li{
+	float: left;
+	border-bottom: 2px solid #fff;
+	height: 17px;
+	margin-left: 25px;
+	margin-right: 67px;
+	*margin-right: 62px;
+}
+.sub_menu ul li.last{
+	margin-right: 25px !important;
+	*margin-right: 24px !important;;
+}
+.sub_menu ul li a{
+	color: #fff;
+	font-size: 13px;
+}
+.sub_menu ul li.on{
+	border-bottom: 2px solid #97daea;
+}
+.sub_menu ul li.on a{
+	color: #97daea;
+}
+
+.btn.medium{
+	background: url("../image/button_choco.png") left top no-repeat;
+	display: inline-block;
+	*zoom:1;
+	width: 131px;
+	height: 46px;
+	text-align: center;
+	line-height: 46px;
+	color: #fff;
+	font-size:14px;
+	padding-left: 15px;
+	vertical-align: middle;
+}
+.btn.medium.on{
+	background: url("../image/button_blue.png") left top no-repeat;
+}
+.btn.medium2{
+	background: url("../image/shop/cal_sct_btn_off.png") left top no-repeat;
+	display: inline-block;
+	*zoom:1;
+	width: 189px;
+	height: 46px;
+	text-align: center;
+	line-height: 46px;
+	color: #fff;
+	font-size:14px;
+	padding-left: 25px;
+	vertical-align: middle;
+}
+.btn.medium2.on{
+	background: url("../image/shop/cal_sct_btn_on.png") left top no-repeat;
+}
+
+/* 샵 네비 */
+.shop_navi{
+	position:absolute;
+	margin-top:-60px;
+	height: 60px;
+	width: 100%;
+	background: url("../image/common/navi_bg.png") left top repeat-x;
+	z-index: 1;
+}
+.shop_navi_menu{
+	width: 1000px;
+	height: 39px;
+	margin: 0 auto;
+	padding-top: 21px;
+}
+.shop_navi_menu ul li{
+	float: left;
+	height: 17px;
+	margin-left: 25px;
+	margin-right: 52px;
+}
+.shop_navi_menu ul li a{
+	font-size: 15px;
+	color: #fff;
+}
+.shop_navi_menu ul li.last{
+	margin-right: 25px;
+}
+.shop_navi_menu ul li.on a{
+	color: #97daea;
+}
+#menu_dep2_1 ul li{
+	margin-right: 316px;
+}
+#menu_dep2_2 ul li{
+	margin-right: 195px;
+}
+#menu_dep2_3 ul li{
+	margin-right: 159px;
+}
+
+/* 우측상단 메뉴 */
+.top_sub_menu{
+	position:fixed;
+	right:0;
+	padding-top: 7px;
+	padding-right: 17px;
+	z-index: 9999;
+	-ms-filter: "progid:DXImageTransform.Microsoft.Shadow(Strength=2, Direction=135, Color='#000000')";
+}
+.top_sub_menu a{
+	color: #fff;
+	font-size: 11px;
+	margin-left: 4px;
+	margin-right: 4px;
+	
+	
+  	filter: progid:DXImageTransform.Microsoft.Blur(pixelradius=2, enabled='true');
+  	filter: progid:DXImageTransform.Microsoft.Chroma(color=#000000),
+	        progid:DXImageTransform.Microsoft.Blur(pixelradius=2);
+	-ms-filter: progid:DXImageTransform.Microsoft.Shadow(Strength=2, Direction=135, Color='#000000');
+	text-shadow: #000000 2px 2px 2px; /* Modern browsers */
+}
+
+.faq_tab{
+	clear: both;
+	padding-top: 40px;
+	height: 45px;
+}
+.faq_btn{
+	display: inline-block;
+	*zoom:1;
+	background: url("../image/community/qa_tab_btn_bg.png") left top no-repeat;
+	width: 179px;
+	height: 45px;
+	line-height: 45px;
+	text-align: center;
+	color: #fff;
+	font-size: 16px;
+}
+.faq_btn.on{
+	background: url("../image/community/qa_tab_btn_bg_on.png") left top no-repeat;
+}
+
+.ml0{margin-left: 0px !important}
+
+.footer{
+	clear: both;
+	padding-top: 120px;
+}
+.foot_top_bg{
+	background-color: #64513d;
+	height: 185px;
+}
+.foot_bottom_bg{
+	background-color:#483729;
+	height: 130px;
+}
+.foot_top{
+	width: 1000px;
+	margin: 0 auto;
+}
+.foot_bottom{
+	width: 1000px;
+	margin: 0 auto;
+}
+.foot_top .left{
+	width: 202px;
+}
+.foot_top .left.last{
+	width: 190px;
+}
+.foot_top_title{
+	padding-top: 35px;
+	font-size: 16px;
+	color: #d7d2c5;
+}
+.foot_top_title.bold{
+	font-weight: bold;
+	font-size: 18px;
+}
+.foot_top_img{
+	padding-top: 15px;
+	width: 88px;
+}
+.foot_top_img ul li{
+	float: left;
+	width: 44px;
+	height: 44px;
+}
+.foot_top_list{
+	padding-top: 15px;
+}
+.foot_top_list ul li{
+	line-height: 24px;
+	height: 24px;
+}
+.foot_top_list ul li a{
+	color: #c6b9ad;
+}
+.foot_logo{
+	padding-top: 20px;
+}
+.foot_company{
+	padding-top: 25px;
+}
+.company_info{
+	margin-left: 67px;
+}
+.company_info p{
+	height: 18px;
+	line-height: 18px;
+	color: #a49483;
+}
+.cp_info1{
+	margin-right: 4px;
+}
+.cp_info2{
+	margin-right: 15px;
+}
+.copyright{
+	padding-left: 67px;
+	padding-top: 12px;
+	color: #a49483;
+}

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title></title>
+<link rel="stylesheet" href="./css/intro.css">
+<script type="text/javascript" src="./js/jquery.js"></script>
+<script type="text/javascript" src="./js/jsc/jsc3d.min.js"></script>
+<script type="text/javascript" src="./js/jsc/jsc3d.touch.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){
+	var viewer = new JSC3D.Viewer(document.getElementById('cubebox'));
+	
+	viewer.setParameter('SceneUrl',         'model/cube.obj');
+	viewer.setParameter('ModelColor',       '#FFFFFF');
+	viewer.setParameter("Background", "off");
+	
+	//viewer.setParameter('BackgroundColor1', '#E5D7BA');
+	//viewer.setParameter('BackgroundColor2', '#383840');
+	viewer.setParameter('RenderMode',       'texturesmooth');
+	
+	viewer.init();
+	viewer.update();
+});
+</script>
+</head>
+<body>
+<div class="wrapper intro">
+<div class="content">
+
+	<div class="logo">
+		<img alt="" src="./img/intro/logo.png">
+	</div>
+	<div class="box3d">
+		<canvas id="cubebox" width="1000" height="600"></canvas>
+	</div>
+	<div class="intro_btns">
+		<h4 class="fn">퀄리티는 금액에서 나오는게 아니라 기술에서 나옵니다.</h4>
+		<div class="skip_btn">
+			<a href="javascript:"><img alt="" src="./img/intro/btn_skip.png"></a>
+		</div>
+	</div>
+	
+</div>
+</div>
+</body>
+</html>

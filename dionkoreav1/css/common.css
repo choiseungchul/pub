@@ -1,0 +1,14 @@
+@CHARSET "UTF-8";
+@IMPORT url("base.css");
+/* 공통 */
+.wrapper{
+	width: 100%;
+	margin: 0 auto;
+	height: 100%;
+	min-height: 100%;
+	*height: auto;
+}
+.content{
+	width: 1000px;
+	margin: 0 auto;
+}

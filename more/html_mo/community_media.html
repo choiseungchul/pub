@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="euc-kr" />
+<title>More than chocolate</title>
+<meta name="viewport" content="user-scalable=no, initial-scale=0.5, maximum-scale=0.5, minimum-scale=0.5, width=device-width, height=device-height">
+<meta name="format-detection" content="telephone=no, address=no, email=no" />
+ <meta name="keyword" content="초콜릿" /> 
+<meta name="discription" content="초콜릿" />
+
+<meta http-equiv="imagetoolbar" content="no" />
+<meta http-equiv="Expires" content="0" />
+<meta http-equiv="Cache-Control" content="No-Cache" />
+<meta http-equiv="Pragma" content="no-cache" />
+<script src="../js/jquery-1.7.2.min.js"></script>
+<link rel="stylesheet" href="../css/m_main.css?cs=1212" type="text/css"/>
+<script src="../js/jquery.BxSlider.min.js"></script>
+<script src="../js/jquery.corner.js"></script>
+
+<script type="text/javascript" src="../js/m_common.js"></script>
+<script type="text/javascript" >
+$(document).ready(function(){
+	$('select').corner('keep 5px');
+	
+	var sampleVid = new Array(4);
+	
+	sampleVid[0] = '95eBPr2X8dE';
+	sampleVid[1] = 'n_XhN-cETKg';
+	sampleVid[2] = 'fFWB_eWjd4Q';
+	sampleVid[3] = '_kr3bOs5s8U';
+	
+	var slider = $('.md_content').bxSlider({
+		auto: false,
+		speed : 400,
+		controls :false,
+		pager:false,
+		infiniteLoop : true,
+		onSlideAfter : function($slideElement, oldIndex, newIndex){
+			loadVideo(sampleVid[newIndex]);
+			$('.mv_navi span').removeClass('on');
+			$('.mv_navi span').eq(newIndex).addClass('on');
+		}
+	});
+	
+	$('.mv_navi span').click(function(){
+		var idx = $('.mv_navi span').index(this); 
+		$('.mv_navi span').removeClass('on');
+		$(this).addClass('on');
+		// 영상변경
+		loadVideo(sampleVid[idx]);
+		slider.goToSlide(idx);
+	});
+	
+});
+
+</script>
+
+<!-- 유튜브 영상 로드 -->
+
+<script type="text/javascript">
+
+//2. This code loads the IFrame Player API code asynchronously.
+var tag = document.createElement('script');
+
+tag.src = "https://www.youtube.com/iframe_api";
+var firstScriptTag = document.getElementsByTagName('script')[0];
+firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+// 3. This function creates an <iframe> (and YouTube player)
+//    after the API code downloads.
+var player;
+function onYouTubeIframeAPIReady() {
+  player = new YT.Player('mv', {
+    height: '388',
+    width: '100%',
+    videoId: '95eBPr2X8dE',
+    events: {
+      'onReady': onPlayerReady,
+      'onStateChange': onPlayerStateChange
+    }
+  });
+}
+
+// 4. The API will call this function when the video player is ready.
+function onPlayerReady(event) {
+  
+}
+
+function loadVideo(vid){
+	player.cueVideoById({'videoId': vid });
+}
+// 5. The API calls this function when the player's state changes.
+//    The function indicates that when playing a video (state=1),
+//    the player should play for six seconds and then stop.
+var done = false;
+function onPlayerStateChange(event) {
+  if (event.data == YT.PlayerState.PLAYING && !done) {
+    //setTimeout(stopVideo, 6000);
+    //done = true;
+  }
+}
+function stopVideo() {
+  player.stopVideo();
+}
+
+</script>
+</head>
+<body>
+<div class="navigation">
+	<div class="left menu_btn">		
+	</div>
+	<div class="left logo">
+		<img alt="" src="../mimg/common/logo.png">
+	</div>
+	<div class="left other_btn">
+	</div>
+</div>
+<div class="menu_left">
+	<table class="menu_left_tb">
+		<tbody>
+		<tr>
+			<td><a href=""><img src="../mimg/common/tab1.png"></a></td>
+			<td><a href=""><img src="../mimg/common/tab2.png"></a></td>
+			<td><a href=""><img src="../mimg/common/tab3.png"></a></td>
+			<td><a href=""><img src="../mimg/common/tab4.png"></a></td>
+		</tr>
+		</tbody>
+	</table>
+</div>
+<div class="menu_right">
+	<ul>
+		<li><a href="">로그인</a></li>
+		<li><a href="">회원가입</a></li>
+		<li><a href="">장바구니</a></li>
+		<li><a href="">주문조회</a></li>
+		<li><a href="">Q&A</a></li>
+	</ul>
+</div>
+ <div class="wrap" id="wrapper">
+ 	
+ 	<div class="main_content clear">
+ 		<h3><img src="../mimg/community/notice_title.png" class="title_img2"></h3> 		
+ 		<div class="notice_list">
+ 			<div class="select_year">
+ 				<select>
+ 					<option value="2014">2014년</option>
+ 					<option value="2013">2013년</option>
+ 					<option value="2012">2012년</option>
+ 					<option value="2011">2011년</option>
+ 				</select>
+ 			</div> 			
+ 		</div><!-- notice_list -->
+ 		
+ 		<div class="medialist">
+			<div class="mv_cont">
+				<!-- 비디오 -->
+				<div id="mv">					
+				</div>
+			</div>
+			<div class="mv_navi">
+				<span class="on"></span>
+				<span></span>
+				<span></span>
+				<span></span>				
+			</div>			
+			<ul class="md_content">
+				<li>
+					<div class="mv_title">생생 정보통 7월 방송</div>
+					<div class="mv_desc">여기에 내용
+여기에 내용</div>
+					<div class="mv_date">2014.09.10</div>
+				</li>
+				<li>
+					<div class="mv_title">생생 정보통 7월 방송</div>
+					<div class="mv_desc">여기에 내용
+여기에 내용</div>
+					<div class="mv_date">2014.09.10</div>
+				</li>
+				<li>
+					<div class="mv_title">생생 정보통 7월 방송</div>
+					<div class="mv_desc">여기에 내용
+여기에 내용</div>
+					<div class="mv_date">2014.09.10</div>
+				</li>
+				<li>
+					<div class="mv_title">생생 정보통 7월 방송</div>
+					<div class="mv_desc">여기에 내용
+여기에 내용</div>
+					<div class="mv_date">2014.09.10</div>
+				</li>
+			</ul> 				
+		</div><!-- medialist -->
+ 		
+ 	</div><!-- main_content -->
+ 	
+ 	<div class="footer mt80">
+ 		<div class="footer_cont">
+ 			<div class="foot_btns">
+	 			<a href="" class="foot_btn">PC버전</a>
+		 		<a href="" class="foot_btn">로그인</a>
+		 		<a href="" class="foot_btn">맨위로</a>
+		 	</div>
+		 	<div class="foot_agreement">
+		 		<a href="">이용약관</a>
+		 		<a>|</a>
+		 		<a href="">개인정보취급방침</a>
+		 	</div>
+		 	<div class="company">
+		 		<pre>피케이글로벌(대표:강원모) | 주소:인천광역시 계양구 서운사업로 41번길 8
+(서운동,2층) | 고객센터:070-4245-6573 | Fax:032-232-0976 | e-mail:
+info@morethanchocolate.co.kr | 사업자등록번호:122-11-95953 | 
+통신판매업신고:제1012-인천계양-0429호 | 개인정보보호책임자:김현우
+Copyright(C) 2014 morethanchocolate all rights reserved.</pre>
+		 	</div>
+ 		</div>
+	 	 
+	 </div>
+ </div>
+</body>
+</html>

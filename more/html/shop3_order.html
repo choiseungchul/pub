@@ -1,0 +1,669 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=euc-kr" />
+<title>More than chocolate</title>
+<meta name="keyword" content="초콜릿" /> 
+<meta name="discription" content="초콜릿" />
+
+<meta http-equiv="imagetoolbar" content="no" />
+<meta http-equiv="Expires" content="0" />
+<meta http-equiv="Cache-Control" content="No-Cache" />
+<meta http-equiv="Pragma" content="no-cache" />
+<link rel="stylesheet" href="../css/shop.css" type="text/css"/>
+<script src="../js/jquery-1.7.2.min.js"></script>
+<script src="../js/jquery-ui-1.10.4.js"></script>
+<link rel="stylesheet" href="../js/jquery-ui-1.10.4.css" type="text/css"/>
+<script src="../js/jquery.mCustomScrollbar.js"></script>
+<link rel="stylesheet" href="../js/jquery.mCustomScrollbar.css" type="text/css"/>
+<script src="../js/jquery.BxSlider.min.js"></script>
+<script src="../js/jquery.filestyle.js"></script>
+<script src="../js/jquery.corner.js"></script>
+<style type="text/css">
+body,html{
+	overflow:hidden; 
+}
+</style>
+<script src="../js/common.js"></script>
+<script type="text/javascript">
+var isImageUp = false;
+var isImageUp2 = false;
+
+$(document).ready(function() {
+	
+	$("input[type=file]").filestyle({ 
+	     image: "../image/shop/file_btn.png",
+	     imageheight : 30,
+	     imagewidth : 75,
+	     width:730
+	 });
+	
+	// 최상단 메뉴 
+	$('.sub_menu ul li').mouseenter(function(){		
+		$(this).addClass('on');
+	});
+	$('.sub_menu ul li').mouseleave(function(){
+		$(this).removeClass('on');
+	});
+	
+	$('.upload_pos').live('click',function(){
+		showUploadLayer(1);
+	});
+	
+	// 초콜릿넣기
+	$('.sct_r_content ul li').click(function(){
+		if($(this).hasClass('change_btn')) return;
+		
+		// 이미 사진업로드 했을경우 애니메이션 X
+		if($('.choco_title_img').hasClass('complete')){
+			return;
+		}
+		
+		var send_offset = $(this).find('img').offset();
+		var img = $(this).find('img').clone();
+		
+		var src = img.attr('src');
+		
+		if(src.indexOf("mypic") != -1){
+			img.attr('src', src.replace('view', 'input'));
+			img.attr('width', '155').attr('height', '75');
+		}
+		
+		var recv_offset = $('.thumb_clicked').offset();
+		
+		$('.sct_animation').show();
+		
+		img.css({marginLeft: (send_offset.left) + 'px', top : (send_offset.top) + 'px', position:'absolute'});
+		
+		$('.sct_animation').append(img);
+		
+		img.animate({			
+			marginLeft : recv_offset.left + 'px',
+			top : (recv_offset.top) + 'px',
+			opacity : 0.5
+		}, 400, function(){			
+			$('.thumb_clicked').empty().append(img);
+			img.removeAttr('style');
+			$('.sct_animation').empty().hide();
+		});		
+	});
+	
+	// spinner 삽입
+	$('.prod_count, .opt_count').spinner({
+		min: 0,
+		start : 0
+	});
+	
+	// 스크롤바
+	$(".sct_r_content").mCustomScrollbar({
+		scrollInertia:600,
+		autoDraggerLength:false
+	});
+	
+	// 사진업로드 레이어
+	$('.up_title').click(function(){
+		var idx = $('.up_title').index(this); 
+		if(idx == 1){
+			$('.upload_1').slideUp(300);
+			$('.upload_2').slideDown(300);
+		}else if(idx == 0){
+			$('.upload_2').slideUp(300);
+			$('.upload_1').slideDown(300);
+		}		
+	});
+	
+	chocoboxInit(7,5);
+	
+	// 버튼 롤오버
+	$('.src_btn').mouseenter(function(){		
+		var src = $(this).attr('src');
+		$(this).attr('src', src.replace('.png','_on.png'));
+	});
+	$('.src_btn').mouseleave(function(){
+		var src = $(this).attr('src');
+		$(this).attr('src', src.replace('_on.png','.png'));
+	});
+	$('.select_btns > span, .price_btns > div.right').mouseenter(function(){
+		var src = $(this).find('img').attr('src');
+		$(this).find('img').attr('src', src.replace('_off','_on'));
+		$(this).find('span.btn.medium').addClass('on');
+	});
+	$('.select_btns > span, .price_btns > div.right').mouseleave(function(){
+		var src = $(this).find('img').attr('src');
+		$(this).find('img').attr('src', src.replace('_on','_off'));
+		$(this).find('span.btn.medium').removeClass('on');
+	});
+	
+	$('.opt_list ul li img').click(function(){
+		showMore();
+	});
+	
+	$('.mask').click(function(){
+		closeMore();
+	});
+	
+	// 슬라이드
+	var slider = $('.review_slide_ul').bxSlider({
+		auto: false,
+		speed : 400,
+		controls :false,
+		pager:false,
+		infiniteLoop : true
+	});
+	
+	$('.cslide_left').click(function(){
+		slider.goToPrevSlide();
+    	return false;
+    });
+
+    $('.cslide_right').click(function(){
+    	slider.goToNextSlide();
+    	return false;
+    });
+    
+    $('.shop3_sct_date span.date3 select').corner('keep 5px');
+    $('.upload_desc input, .upload_1').corner('keep 5px');
+    
+    $('.btn.upload').mouseenter(function(){
+		$(this).addClass('on');
+	});
+	$('.btn.upload').mouseleave(function(){
+		$(this).removeClass('on');
+	});
+    
+    // 날짜
+    var startIdx = 6;
+	
+	$(function(){
+		for(var i = 1 ; i <= 31 ; i++){
+			$('#date3').append('<option value="'+(i-1)+'">' + i + '일</option>');
+		}
+		
+		$('#date3').change(function(e){
+			var val = $('#date3 option:selected').val();
+			$('#chocobox li.upload_pos').removeClass('upload_pos');
+			$('#chocobox li').eq(startIdx + parseInt(val)).addClass('upload_pos');
+		});
+	});
+	
+	$('.upload_desc input').focus(function(){
+		$(this).prev('label').hide();
+	});
+	$('.upload_desc input').blur(function(){
+		if($(this).val() == ''){
+			$(this).prev('label').show();
+		}		
+	});
+});
+
+var curr_loc = new Array(2);
+var curr_upload_type = -1;
+
+//type = 0 , 1x1
+//type = 1 , 2x1
+//type = 2 , 2x2
+function setFileUpload(type){
+	
+	if(type == 0){
+		$('.clicked').empty().append('<img src="../image/shop/pic_upload.png">');
+	}else if(type == 1){
+		$('.clicked').empty().append('<img src="../image/shop/pic_upload2.png">');
+	}else if(type == 2){
+		$('.clicked').empty().append('<img src="../image/shop/pic_upload3.png">');
+	}
+}
+
+function backToMaking(){
+	$('body, html').animate({scrollTop: 0}, 400, function() {});
+}
+
+function chocoboxInit(x, y){
+		
+	$('.choco_calendar_cont').append('<ul id="chocobox"></ul>');
+	for(var i = 0 ; i < x*y ; i++){
+		$('#chocobox').append("<li></li>");
+	}	
+	
+	$('#chocobox li').each(function(e){
+		var idx = $('#chocobox li').index(this);
+		var _x = parseInt(idx % x);
+		var _y = parseInt(idx / x);
+		$(this).css({
+			marginLeft : (_x*83) + 'px',
+			marginTop : (_y*83) + 'px'
+		});
+		
+		_x+=1;
+		_y+=1;
+		
+		$(this).attr('id','m_' + _x + '_' + _y);
+	});
+	
+}
+
+function chocoboxReset(){
+	$('#chocobox li').each(function(){
+		$(this).empty().removeClass('clicked2').removeClass('upload_pos');
+	});
+	$('.choco_title_img').removeClass('thumb_clicked 	over complete')
+	.empty()
+	.append('<img src="../image/shop/pic_upload2.png" onclick="showUploadLayer(0);">');
+	
+	$('#date3 option').each(function(){
+		$(this).removeAttr('selected')
+	});
+	$('#date3 option').eq(0).attr('selected', 'selected');
+	
+	isImageUp = false;
+	isImageUp2 = false;
+}
+
+function sct_complete(){
+	
+	if(isImageUp && isImageUp2){
+		var animSpeed = 1000;
+		
+		var target = $('.comp_img3 img').offset();
+		var start = 	$('.choch_sct_bg').offset();
+		var comp = $('.choch_sct_bg').clone().addClass('c_anim');
+		$('.choch_sct_bg').hide();
+		comp.css( {left : start.left, top: start.top, margin : 0} );
+		$('.static_ani').empty().prepend(comp).show();
+		
+		$('.comp_img3').css({'z-index': '18000'});
+		
+		$('.c_anim').animate({
+			left: target.left, 
+			top : target.top
+		}, animSpeed, function(){
+			$('.c_anim').remove();
+			$('.static_ani').hide();
+			$('.choch_sct_bg').show();
+			$('.comp_img3').css({'z-index': '1'});
+		});
+		
+		$('body, html').animate({scrollTop: 980}, animSpeed, function() {});
+	}else{
+		alert('조합이 완료되지 않았습니다.');
+	}
+}
+
+function showUploadLayer(type){
+	curr_upload_type = type;
+	$('.sw_upload').css({
+		'z-index': 20002
+	});
+	
+	$('.mask').fadeTo("fast", 0.7);
+}
+
+function closeUploadLayer(){
+	$('.sw_upload').css('z-index', -1);
+	$('.mask').hide();
+}
+
+function setBtnUpload(){
+	
+	if(!$('.choco_title_img').hasClass('complete')){
+		$('.choco_title_img').empty();
+	}	
+	$('.choco_title_img').append('<img src="../image/shop/pic_upload2.png" onclick="showUploadLayer(0);">');
+}
+
+//이미지 업로드 완료
+// 0 => 상단 2x1
+// 1 => 30개중 하나
+function uploadComplete(){
+	closeUploadLayer();
+	
+	if(curr_upload_type == 0){
+		$('.choco_title_img').empty();
+		$('.choco_title_img')
+		.addClass('complete')
+		.append('<div class="thumb_uploaded"><p>보내주신 사진은</p><p>모어댄초콜릿 디자이너들이</p><p>예쁘게 다시 편집해드립니다!</p></div>');
+		
+		isImageUp = true;
+		
+	}else if(curr_upload_type == 1){
+		$('.pics').empty();
+		$('.upload_pos').addClass('pics')
+		.append('<img src="../image/shop/cal_pic_uploaded_2.png">');
+		
+		isImageUp2 = true;
+	}	
+}
+
+function showMore(){
+	$('.comp_review').css('z-index', 10002);
+	$('.mask').fadeTo("fast", 0.7);
+}
+
+function closeMore(){
+	$('.comp_review').css('z-index', -1);
+	$('.mask').hide();
+}
+
+</script>
+</head>
+<body>
+<div style="display: none;">
+	<span class="selected_85 dummy"></span>
+</div>
+<div class="static_ani">
+</div>
+<div id="wrap" style="z-index:0">
+	<!-- Top Menu -->
+	<div id="topMenu1" style="position:fixed;top:0px;left:50%;margin-left:-61px;z-index:100;">
+		<img class="btn" src="../image/mark_close.png" width="135" height="124" onClick="menuToggle()"/>
+	</div>
+	<div id="topMenu2" style="position:fixed;top:0px;width:100%;z-index:200;display:none;min-width:1000px">
+		<table width="100%" border="0" align="center" cellpadding="0" cellspacing="0" bgcolor="#483729">
+		  <tr>
+		    <td><div align="center"><a href="#"><img src="../image/mark_01.jpg" width="174" height="126" align="middle" /></a></div></td>
+		  </tr>
+		  <tr>
+		    <td align="center">
+			    <div class="topMenu_line"></div>
+		    </td>
+		  </tr>
+		  <tr>
+		    <td height="130" align="center">		    	
+		    	<table id="menuTbl" width="800" border="0" cellspacing="0" cellpadding="0">
+		      		<tr>
+				       <td width="91" class="on"><a href="shop_main.html"><img src="../image/menu_01_ov.jpg" width="91" height="107" class="top_btns on"/></a></td>
+				        <td>&nbsp;</td>
+				        <td width="91"><a href="store_main.html"><img src="../image/menu_02_nm.jpg" width="91" height="107" class="top_btns"/></a></td>
+				        <td>&nbsp;</td>
+				        <td width="91"><a href="biz_main.html"><img src="../image/menu_03_nm.jpg"  width="91" height="107" class="top_btns"/></a></td>
+				        <td>&nbsp;</td>
+				        <td width="91"><a href="community_main.html"><img src="../image/menu_04_nm.jpg" width="91" height="107" class="top_btns"/></a></td>
+			      </tr>
+		    	</table>
+		    </td>
+		  </tr>
+		  <tr>
+		    <td align="center">
+		    	<div class="topMenu_line"></div>
+		    </td>
+		  </tr>
+		  <tr>
+		    <td align="center">
+		    	<table width="1000"  border="0" cellpadding="0" cellspacing="0">
+		      		<tr>
+		        		<td height="55">
+		        			<div class="sub_menu" id="menu_dep2_0" >
+		        				<ul>
+		        					<li><a href="shop1.html">Tab Letter White</a></li>
+		        					<li><a href="shop2.html">Tab Letter Color</a></li>
+		        					<li class="on"><a href="shop3.html">365 Days Calendar</a></li>
+		        					<li><a href="shop4.html">Special Edition</a></li>
+		        					<li><a href="shop5.html">Baby</a></li>		        					
+		        					<li class="last"><a href="shop6.html">Wedding</a></li>
+		        				</ul>
+		        			</div>
+		        			<div class="sub_menu" id="menu_dep2_1" style="display: none;" >
+		        				<ul>
+		        					<li><a href="store_gallery.html">Store Gallery</a></li>
+		        					<li><a href="store_about.html">About Partner Store</a></li>
+		        					<li class="last"><a href="#">Contact Us</a></li>   					
+		        				</ul>
+		        			</div>
+		        			<div class="sub_menu" id="menu_dep2_2" style="display: none;">
+		        				<ul>
+		        					<li><a href="biz_gallery.html">Biz Gallery</a></li>
+		        					<li><a href="biz_about.html">About MTC</a></li>
+		        					<li><a href="#">How To Order</a></li>
+		        					<li class="last"><a href="#">Contact Us</a></li>		        					
+		        				</ul>
+		        			</div>
+		        			<div class="sub_menu" id="menu_dep2_3" style="display: none;">
+		        				<ul>
+		        					<li><a href="community_brand_story.html">Brand Story</a></li>
+		        					<li><a href="community_event_list.html">Event</a></li>
+		        					<li><a href="community_notice_list.html">Notice</a></li>
+		        					<li><a href="community_media_list.html">Media</a></li>
+		        					<li class="last"><a href="community_qna.html">Q&A</a></li>		        					
+		        				</ul>
+		        			</div>
+		        		</td>
+		      		</tr>
+		    	</table>
+		    </td>
+		  </tr>
+		  <tr>
+		    <td align="center">
+		    	<div class="topMenu_line"></div>
+		    </td>
+		  </tr>		  
+		  <tr>
+		    <td align="center" height="73"><table width="160" border="0" cellspacing="0" cellpadding="0">
+		      <tr>
+		        <td width="36"><img src="../image/bt_blog.jpg" width="36" height="36" /></td>
+		        <td>&nbsp;</td>
+		        <td width="36"><img src="../image/bt_face.jpg" width="36" height="36" /></td>
+		        <td>&nbsp;</td>
+		        <td width="36"><img src="../image/bt_tweet.jpg" width="36" height="36" /></td>
+		      </tr>
+		    </table></td>
+		  </tr>
+		  <tr>
+		    <td>&nbsp;</td>
+		  </tr>
+		</table>
+		<table width="100%" border="0" cellspacing="0" cellpadding="0">
+		  <tr>
+		    <td valign="top" style="width:250; height:250; background-image: url(../image/gnb_sdw.png) ; background-repeat:repeat-x">&nbsp;</td>
+		    <td width="125" valign="top"><img class="btn" src="../image/gnb_close.png" width="125" height="37" onClick="menuToggle();"/></td>
+		    <td valign="top" style="width:250; height:250; background-image: url(../image/gnb_sdw.png) ; background-repeat:repeat-x">&nbsp;</td>
+		  </tr>
+		</table>
+	</div><!-- topMenu2 -->
+	
+	<!-- 우측상단 링크 -->
+	<div class="top_sub_menu">
+		<a href="">로그인</a>
+		<a href=""> | </a>
+		<a href="">회원가입</a>
+		<a href=""> | </a>
+		<a href="">장바구니</a>
+		<a href=""> | </a>
+		<a href="">주문조회</a>
+		<a href=""> | </a>
+		<a href="">Q&A</a>
+	</div>
+	
+	<!-- 미리보기 -->
+	<div class="mask"></div>
+	<div class="comp_review">		
+		<div class="comp_review_title">
+			<img src="../image/shop/comp_review_close.png" alt="" onclick="closeMore()" class="rv_close"/>			
+		</div>
+		<div class="comp_slide_btn">
+			<img src="../image/shop/rv_slide_left.png" alt="" class="cslide_left"/>
+			<img src="../image/shop/rv_slide_right.png" alt="" class="cslide_right"/>
+		</div>
+		<div class="review_slide">
+			<ul class="review_slide_ul">
+				<li><img src="../image/shop/complete_review.png" /></li>
+				<li><img src="../image/shop/complete_review.png" /></li>
+				<li><img src="../image/shop/complete_review.png" /></li>
+				<li><img src="../image/shop/complete_review.png" /></li>
+				<li><img src="../image/shop/complete_review.png" /></li>
+			</ul>
+		</div>
+	</div><!-- comp_review -->
+	
+	<!-- 사진 업로드 레이어 -->
+	<div class="mask"></div>
+	<div class="sw_upload h485">
+		<div class="upload_close">
+			<img src="../image/shop/upload_close.png" alt="" onclick="closeUploadLayer();"/>
+		</div>		
+		<div class="up_title">
+			<img src="../image/shop/upload_c_icon.png" alt="" />
+			<span>포토 초콜릿</span>
+		</div>
+		<div class="upload_1_bg">
+			<div class="upload_1">
+				<h3>사진 업로드</h3>
+				<div class="upload_desc">
+					<label for="photo_img">사진은 밝고 큰 원본 파일을 보내주세요. </label>
+					<input type="file" value="" id="photo_img"/>
+				</div>
+				<h3>메시지 추가</h3>
+				<div class="upload_desc">
+					<p><span class="text_count">0/10</span></p>			
+					<label for="photo_msg">메시지를 원치 않으시면 ‘메시지 없음’ 이라고 적어주세요.</label>
+					<input type="text" value="" id="photo_msg" />
+				</div>
+			</div>		
+		</div>
+		
+		<div class="upload_comp">			
+			<span class="btn upload" onclick="uploadComplete()">
+				<span class="btn_text">완료</span>
+			</span>
+		</div>
+	</div>
+	
+	<!-- 내용 -->
+	<div class="shop_white">		
+		<!-- 초콜릿선택 -->
+		<div class="choco_select">
+			<!-- 애니메이션 -->
+			<div class="sct_animation"></div>
+			
+			<div class="sct_full">
+				<div class="sct_calendar_left" align="center">
+					
+					<div class="choch_sct_bg bg3">
+						<div class="choco_calendar_title">
+							<span class="choco_title_img thumb_clicked">
+								
+							</span>							
+						</div>
+						<div class="choco_calendar_cont">			
+						</div>
+						
+					</div><!-- choch_sct_bg -->
+					
+					<div class="size_mm3">
+						<img src="../image/shop/size_text3.png" alt="" />
+					</div>
+					<div class="select_btns pr0">
+						<img src="../image/shop/back_btn.png" alt="뒤로가기" class="src_btn"/>
+						<span>
+							<img src="../image/shop/reset_icon_off.png" alt="" class="cart_icon"/>
+							<span class="btn medium" onclick="chocoboxReset();">다시 선택</span>							
+						</span>
+						<span>
+							<img src="../image/shop/cart_icon_off.png" alt="" class="cart_icon"/>
+							<span class="btn medium" onclick="sct_complete();">선택 완료</span>							
+						</span>						
+					</div>
+				</div>
+				
+				<div class="sct_calendar_right shop3" align="left">
+					<div class="sct_r_tabs pl19">
+						<span class="btn bg1 on">타이틀 초콜릿</span>
+					</div>					
+					<div class="sct_r_content shop3_h">
+						<ul>
+							<li class="change_btn"><img src="../image/shop/mypic/mypic.png" onclick="setBtnUpload()"/></li>
+							<li><img src="../image/shop/mypic/cheer_up_view.png" /></li>
+							<li><img src="../image/shop/mypic/cheer_up_view.png" /></li>
+							<li><img src="../image/shop/mypic/cheer_up_view.png" /></li>
+							<li><img src="../image/shop/mypic/cheer_up_view.png" /></li>							
+						</ul>
+					</div>
+					
+					<div class="sct_r_tabs pl19 pt66">
+						<span class="btn bg1 on">날짜 초콜릿</span>
+					</div>
+					<div class="shop3_sct_date">
+						<span class="date1">2014년</span>
+						<span class="date2">2월</span>
+						<span class="date3">
+							<select id="date3">
+								<option>선택안함</option>
+							</select>							
+						</span>
+					</div>
+				</div>
+			</div>
+			<!-- 
+			<div class="sct_compact">
+				<div class="sct_left"></div>
+				<div class="sct_right"></div>
+			</div>
+			 -->
+		</div>
+		<!-- 초콜릿 선택완료 -->
+		<div class="choco_select_complete">
+			<div class="prices">
+				<ul>
+					<li>
+						<h4>Tab Letter White 16</h4>
+						<h4>\24,000</h4>
+					</li>
+					<li>
+						<h6>수량</h6>
+						<span class="p_txt">
+							<input class="prod_count" name="" value="0"/> 개
+						</span> 						
+					</li>
+					<li>
+						<h6>옵션</h6>
+						<span class="p_txt">쇼핑백</span>
+						<input class="opt_count" name="" value="0"/>
+						<span class="sm_price">\1,000 <img src="../image/shop/price_del.png" class="opt_del"/></span>						
+					</li>
+					<li>
+						<h6>배송료</h6>
+						<span class="p_txt">2.500원</span>
+					</li>
+					<li>
+						<h6>적립금</h6>
+						<span class="p_txt">\ 160</span>
+					</li>
+					<li>
+						<h6>총상품 금액</h6>
+						<span class="p_txt2">\ 16,500</span>
+					</li>
+				</ul>
+				<div class="price_btns">
+					<div class="left">
+						<img src="../image/shop/back_btn.png" alt="BACK" class="src_btn" onclick="backToMaking();"/>
+						<img src="../image/shop/twit_btn.png" alt="twitter" class="src_btn"/>
+						<img src="../image/shop/fb_btn.png" alt="facebook" class="src_btn"/>
+					</div>
+					<div class="right">
+						<img src="../image/shop/cart_icon_off.png" alt="" class="cart_icon"/>
+						<span class="btn medium">장바구니 담기</span>	
+					</div>
+				</div>
+			</div>
+			<div class="options">
+				<h4>옵션선택</h4>
+				<div class="opt_list">
+					<ul>
+						<li><img src="../image/shop/option_icon.png" alt="" /><span>쇼핑백</span></li>
+					</ul>
+				</div>
+				
+			</div>
+			<div class="complete bg3">
+				<div class="comp_img3">
+					<img src="../image/shop/comp3_img.png" alt="" />
+				</div>				
+			</div>
+			
+			
+		</div>
+		
+	</div>
+
+
+</div>
+</body>
+</html>

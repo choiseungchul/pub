@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>SCMIND</title>
+<link rel="stylesheet" type="text/css" href="http://arcray.dothome.co.kr/scminddev/css/catchmind.css">
+<link rel="stylesheet" type="text/css" href="css/modal/basic.css">
+<meta http-equiv="X-Frame-Options" content="GOFORIT">
+<script src="/script/jquery-1.7.2.js"></script>
+<script src="/script/simplemodal.js"></script>
+<script src="/script/jquery.corner.js"></script>
+<script src="/socket.io/socket.io.js"></script>
+<script src="common.js"></script>
+<script src="rooms.js"></script>
+<script type="text/javascript">
+$(function(){
+	$('.myinfo_menu ul li, .notice_list li').live('mouseenter',function(){
+		$(this).css('font-weight','bold');
+	});
+	$('.myinfo_menu ul li, .notice_list li').live('mouseleave',function(){
+		$(this).css('font-weight','normal');
+	});
+	$('span.gamebtn1').mouseenter(function(){
+		$(this).css('background-color','rgb(79, 135, 255)');
+		$(this).css('color','#fff');
+	});
+	$('span.gamebtn1').mouseleave(function(){
+		$(this).css('background-color','#fff');
+		$(this).css('color','#000');
+	});
+	$('.intoroom_btn, .gamebtn span').live('mouseenter',function(){
+		$(this).css('background-color','rgb(79, 135, 255)');
+		$(this).css('color','#fff');
+	});
+	$('.intoroom_btn, .gamebtn span').live('mouseleave',function(){
+		$(this).css('background-color','#fff');
+		$(this).css('color','#000');
+	});
+});
+</script>
+</head>
+<body>
+<div id="fb-root"></div>
+<!-- context menu values -->
+<input type="hidden" id="draw_idx"/>
+<input type="hidden" id="draw_name"/>
+<input type="hidden" id="draw_src"/>
+<div class="makeroom_input" style="display: none;">
+	<h2>방이름을 입력하세요</h2>
+	<input type="text" value="" class="roomname_input" id="roomname_input"/>
+	<div class="roommake_btns">
+		<span class="gamebtn1" onclick="makeroom();">방만들기</span>
+		<span class="gamebtn1" onclick="cancelmakeroom();" style="margin-left:30px;">취소</span>
+	</div>
+</div>
+<div class="n_brd_view">
+	<p></p>
+</div>
+<div class="notice_layer">
+	<span class="n_pop_close" onclick="n_close();">닫기</span>
+	<div class="n_title"></div>
+	<div class="n_content"></div>
+</div>
+<div class="myinfo_layer">
+	<div class="draw_context">
+		<span class="draw_contx_close" onclick="my_draw_close();">닫기</span>
+		<ul>
+			<li onclick="del_pic();">이 그림을 삭제</li>
+			<li onclick="post_fb();">페이스북에 올리기</li>
+		</ul>
+	</div>
+	<span class="my_pop_close" onclick="my_close();">닫기</span>
+	<div class="my_draw"></div>
+	<div class="pic_btn">
+		<span style="float:left" onclick="pic_prev();">이전</span>
+		<span style="float:right" onclick="pic_next();">다음</span>
+	</div>
+	<div style="clear:both;font-size:0px">&nbsp;</div>
+</div>
+<div class="imgRender_cont">
+	<img alt="" src="" id="rendering"/>
+</div>
+<div class="wrap">
+	<div class="header">
+	</div>
+	<div class="mid">
+		<div class="content">
+			<div class="gamebtn">
+				<span class="makeroom_btn" onclick="viewMakeRoom();">방 생성하기</span>
+				<span class="quick_start">빠른 시작</span>
+				<span class="solo_play" onclick="location.href='mydraw.html'">혼자 하기</span>
+			</div>
+			<div class="roomlist_cont"></div>
+		</div>
+		<div class="aside">
+			<div class="myinfo" title="우클릭시 메뉴가 나옵니다">
+				<div class="myinfo_menu">
+					<span onclick="closeMyInfo();" class="myinfo_xx">닫기</span>
+					<ul>
+						<li onclick="showMyInfo();">내정보</li>
+						<li onclick="showMyDraw();">내그림</li>
+						<li>점수 : </li>
+					</ul>
+				</div>
+				<h4>내 정보</h4>
+				<div>
+					<div class="mypicture"></div>
+					<div class="myname"></div>
+				</div>
+			</div>
+			<h4>공지사항</h4>
+			<div class="notice"></div>
+			<div class="totaluser"></div>
+			<div class="chat">
+				<div class="chat_out"></div>
+				<div class="chat_input">
+					<input type="text" value="" id="chatInput_global"/>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="footer">개발자에게 문의하기<a href="mailto:arcray55@gmail.com">arcray55@gmail.com</a></div>
+</div>
+</body>
+</html>

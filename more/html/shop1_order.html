@@ -1,0 +1,738 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=euc-kr" />
+<title>More than chocolate</title>
+<meta name="keyword" content="초콜릿" /> 
+<meta name="discription" content="초콜릿" />
+
+<meta http-equiv="imagetoolbar" content="no" />
+<meta http-equiv="Expires" content="0" />
+<meta http-equiv="Cache-Control" content="No-Cache" />
+<meta http-equiv="Pragma" content="no-cache" />
+<link rel="stylesheet" href="../css/shop.css" type="text/css"/>
+<script src="../js/jquery-1.7.2.min.js"></script>
+<script src="../js/jquery-ui-1.10.4.js"></script>
+<link rel="stylesheet" href="../js/jquery-ui-1.10.4.css" type="text/css"/>
+<script src="../js/jquery.mCustomScrollbar.js"></script>
+<script src="../js/e-smart-hittest-jquery.js"></script>
+
+<link rel="stylesheet" href="../js/jquery.mCustomScrollbar.css" type="text/css"/>
+<script src="../js/jquery.BxSlider.min.js"></script>
+<style type="text/css">
+body,html{
+	overflow:hidden; 
+}
+</style>
+<script src="../js/common.js"></script>
+<script type="text/javascript">
+var mSize = 3;
+$(document).ready(function() {
+	
+	// 최상단 메뉴 
+	$('.sub_menu ul li').mouseenter(function(){		
+		$(this).addClass('on');
+	});
+	$('.sub_menu ul li').mouseleave(function(){
+		$(this).removeClass('on');
+	});
+ 
+	// 조합칸 생성
+	var query = location.search;
+	
+	if(query != ''){
+		 var size = query.split('s=')[1];
+		 chocoboxInit(size, size);
+		 mSize = parseInt(size);
+	}else{
+		 chocoboxInit(3, 3);
+	}
+	
+    $('.choch_sct_bg ul li').live('mouseenter',function(){
+    	if(!$(this).hasClass('clicked')){
+    		var selected_obj = $('.dummy').clone();
+    		selected_obj.addClass('overed');
+    		$(this).prepend(selected_obj);    		
+    	}    	
+    });	
+    $('.choch_sct_bg ul li').live('mouseleave',function(){
+    	$('.choch_sct_bg ul li > span.overed').remove();
+    });	
+    
+	$('.choch_sct_bg ul li').live('click',function(){
+		$('.clicked').removeClass('clicked');
+		$('span.set').remove();
+		$(this).addClass('clicked');
+		var selected_obj = $('.dummy').clone();
+		selected_obj.addClass('set');
+		$(this).prepend(selected_obj);
+	});
+	
+	$('.sct_r_tabs span').live('click',function(){
+		var idx = $('.sct_r_tabs span').index(this); 
+		
+		$('.sct_r_tabs span').removeClass('on');
+		$(this).addClass('on');
+		
+		$('.sct_r_content').hide();
+		$('.sct_r_content').eq(idx).show();
+	});
+	
+	// 초콜릿넣기
+	$('.sct_r_content ul li').click(function(ev){
+		input_animation(ev, this);
+	});
+	
+	// spinner 삽입
+	$('.prod_count, .opt_count').spinner({
+		min: 0,
+		start : 0
+	});
+	
+	// 스크롤바
+	$(".sct_r_content").mCustomScrollbar({
+		scrollInertia:600,
+		autoDraggerLength:false
+	});
+	
+	// 슬라이드
+	var slider = $('.review_slide_ul').bxSlider({
+		auto: false,
+		speed : 400,
+		controls :false,
+		pager:false,
+		infiniteLoop : true
+	});
+	
+	$('.cslide_left').click(function(){
+		slider.goToPrevSlide();
+    	return false;
+    });
+
+    $('.cslide_right').click(function(){
+    	slider.goToNextSlide();
+    	return false;
+    });
+    
+    $('.sct_r_content ul li').mouseenter(function(){
+		var img = $(this).find('img').clone();
+		
+		var src = img.attr('src');
+		// 알파벳일경우
+		if(src.indexOf("alphabet") != -1){
+			img.attr('src', src.replace('view', 'input'));
+			img.attr('width', '84').attr('height', '84');	
+			if(Browser.ie)
+				img.css('position', 'absolute');
+		}
+		
+		img.addClass('r_over');
+		
+		if($($('.clicked').find('img')[0]).hasClass('r_over') || $('.clicked').find('img').length == 0){
+			$('.clicked').remove('.r_over');
+			$('.clicked').prepend(img);
+		}			
+	});
+	
+	$('.sct_r_content ul li').mouseleave(function(){
+		$('.r_over').remove();
+	});
+	
+	$('.opt_list ul li img').click(function(){
+		showMore();
+	});
+	
+	$('.mask').click(function(){
+		closeMore();
+	});
+});
+
+var curr_loc = new Array(2);
+
+function onAnimationComplete($img, type){
+	
+	$('.clicked').empty('img').append($img);
+	$img.removeAttr('style');
+	$('.sct_animation').empty().hide();
+	
+	var click_idx = $('#chocobox li').index($('.clicked'));		
+//	var x = parseInt($('.clicked').attr('id').split('_')[1]);
+//	var y = parseInt($('.clicked').attr('id').split('_')[2]);
+	var li_length = mSize * mSize;
+	
+	if(type == 0){
+		if(li_length > click_idx + 1){
+			$('.clicked').removeClass('clicked');
+			
+			$('#chocobox li').eq(click_idx+1).addClass('clicked');
+			var selected_obj = $('.dummy').clone();
+			selected_obj.addClass('set');
+			$('#chocobox li').eq(click_idx+1).prepend(selected_obj);			
+		}
+		
+	}else if(type == 1){		
+		// hit test		
+		var origin = $('.clicked').find('img')[0];
+		$(origin).addClass('not_remove');
+		
+		// 겹치는 이미지 제거
+		$('#chocobox li img').each(function(idx){			
+			var _img = $(this);			
+			if(_img != undefined){
+				if(!_img.hasClass('not_remove')){
+					var isHit = $(origin).objectHitTest({"object":_img, "transparency":false});
+					
+					if(isHit){
+						$('#chocobox li').each(function(){
+							if(_img.objectHitTest({"object":$(this)})){
+								$(this).removeClass('pass');
+							}
+						});						
+						_img.remove();
+					}
+				}
+			}
+		});	
+		
+		/*
+		$('#m_' + x + '_' + y ).addClass('pass');
+		$('#m_' + (x+1) + '_' + y).addClass('pass');
+		$('#m_' + x + '_' + (y+1)).addClass('pass');
+		$('#m_' + (x+1) + '_' + (y+1)).addClass('pass');
+		*/
+		
+		$(origin).removeClass('not_remove');
+		
+		$('.clicked').removeClass('clicked');
+	}
+	
+	
+}
+
+function chocoboxInit(x, y){
+	if(x != y) {
+		return;
+	}
+	
+	if(x == 4){
+		$('.choch_sct_bg').removeClass('m3x3').addClass('m4x4');	
+		$('.size_mm').empty().append($('<img src="../image/shop/size_text.png" alt="" />'));
+		$('.comp_img').empty().append($('<img src="../image/shop/comp_4x4_img.png" alt="" style="margin-left:12px;"/>'));
+	}else if(x == 3){
+		$('.choch_sct_bg').removeClass('m4x4').addClass('m3x3');
+		$('.size_mm').empty().append($('<img src="../image/shop/size_text2.png" alt="" />'));
+		$('.comp_img').empty().append($('<img src="../image/shop/comp_3x3_img.png" style="margin-left:56px; margin-top:90px;"/>'));
+	}
+	
+	$('.choch_sct_bg').empty();
+	curr_loc = new Array(2);
+	
+	$('.choch_sct_bg').append('<ul id="chocobox"></ul>');
+	for(var i = 0 ; i < x*y ; i++){
+		$('#chocobox').append("<li></li>");		
+		if(i == 0){			
+			var first = $('#chocobox li').eq(0);
+			$(first).addClass('clicked');
+			var selected_obj = $('.dummy').clone();
+			selected_obj.addClass('set');
+			$(first).prepend(selected_obj);
+		}		
+	}	
+	
+	$('#chocobox li').each(function(e){
+		var idx = $('#chocobox li').index(this);
+		var _x = parseInt(idx % x);
+		var _y = parseInt(idx / y);
+		$(this).css({
+			marginLeft : (_x*85) + 'px',
+			marginTop : (_y*85) + 'px'
+		});
+		
+		_x+=1;
+		_y+=1;
+		
+		$(this).attr('id','m_' + _x + '_' + _y);
+	});
+	
+	// 버튼 롤오버
+	$('.src_btn').mouseenter(function(){		
+		var src = $(this).attr('src');
+		$(this).attr('src', src.replace('.png','_on.png'));
+	});
+	$('.src_btn').mouseleave(function(){
+		var src = $(this).attr('src');
+		$(this).attr('src', src.replace('_on.png','.png'));
+	});
+	$('.select_btns > span, .price_btns > div.right').mouseenter(function(){
+		var src = $(this).find('img').attr('src');
+		$(this).find('img').attr('src', src.replace('_off','_on'));
+		$(this).find('span.btn.medium').addClass('on');
+	});
+	$('.select_btns > span, .price_btns > div.right').mouseleave(function(){
+		var src = $(this).find('img').attr('src');
+		$(this).find('img').attr('src', src.replace('_on','_off'));
+		$(this).find('span.btn.medium').removeClass('on');
+	});
+}
+
+function chocoboxReset(){
+	
+	$('#chocobox li').each(function(){
+		$(this).empty().removeClass('clicked');
+	});
+	
+	$('#chocobox li').eq(0).addClass('clicked').append('<span class="selected_85 dummy set"></span>');
+}
+
+function backToMaking(){
+	$('body, html').animate({scrollTop: 0}, 400, function() {});
+}
+
+function setBox(x, y){
+	chocoboxInit(x, y);
+}
+
+var isAnimate = false;
+
+function input_animation(ev, _this){
+	
+	if(!isAnimate){
+		isAnimate = true;
+		
+		var send_offset = $(_this).find('img').offset();
+		var img = $(_this).find('img').clone();
+		
+		if($('.clicked').length == 0){
+			alert('초콜릿을 넣을 부분을 선택해주세요.');
+			isAnimate = false;
+			return;
+		}
+		
+		var clicked_index = $('#chocobox li').index($('.clicked'));
+		
+		var type = 0;
+		var src = img.attr('src');
+		// 알파벳일경우
+		if(src.indexOf("alphabet") != -1){
+			img.attr('src', src.replace('view', 'input'));
+			img.attr('width', '84').attr('height', '84');
+			img.addClass('normalimg');
+		}else if(src.indexOf('bigimg') != -1){
+			img.attr('width', '169').attr('height', '169');
+			img.addClass('bigimg');
+			type = 1;
+			
+			if(mSize == 3){				
+				if(clicked_index != 0 && clicked_index != 1 && clicked_index != 3 && clicked_index != 4){
+					alert('이곳엔 큰 이미지를 넣을 수 없습니다.');
+					isAnimate = false;
+					return;
+				}
+			}else if(mSize == 4){				
+				if(clicked_index != 0 && clicked_index != 1 && clicked_index != 2 && clicked_index != 4 &&
+						clicked_index != 5 && clicked_index != 6 && clicked_index != 8 && clicked_index != 9 &&
+						clicked_index != 10 ){
+					alert('이곳엔 큰 이미지를 넣을 수 없습니다.');
+					isAnimate = false;
+					return;
+				}
+			}
+		}
+		
+		var recv_offset = $('.clicked').offset();
+		
+		$('.sct_animation').show();
+		
+		img.css({marginLeft: (send_offset.left) + 'px', top : (send_offset.top) + 'px', position:'absolute'});
+		
+		$('.sct_animation').append(img);
+		
+		
+		img.animate({
+			marginLeft : recv_offset.left + 'px',
+			top : (recv_offset.top) + 'px',
+			opacity : 0.5
+		}, 400, function(){
+			isAnimate = false;
+			
+			onAnimationComplete($(img), type);
+		});		
+	}
+}
+
+function boxValidate(){
+	var imageCount = $('img.normalimg').length;
+	
+	var bigimgCount = $('img.bigimg').length;
+	
+	var max = mSize * mSize;
+	
+	
+	if(max == imageCount + (bigimgCount * 4)){
+		return true;
+	}
+	
+	return false;
+}
+
+function sct_complete(){
+	
+	if(!boxValidate()){
+		alert('조합이 완료되지 않았습니다.');
+		return false;
+	}
+	
+	var animSpeed = 1000;
+	
+	var target = $('.comp_img img').offset();
+	var start = 	$('.choch_sct_bg').offset();
+	var comp = $('.choch_sct_bg').clone().addClass('c_anim');
+	$('.choch_sct_bg').hide();
+	comp.css( {left : start.left, top: start.top} );
+	$('.static_ani').empty().prepend(comp).show();
+
+	$('.c_anim').animate({
+		left: target.left -  15, 
+		top : target.top
+	}, animSpeed, function(){
+		$('.c_anim').remove();
+		$('.static_ani').hide();
+		$('.choch_sct_bg').show();
+	});
+	
+	$('body, html').animate({scrollTop: 980}, animSpeed, function() {});
+}
+
+function tabChange(type){
+	$('.sct_r_content').hide();
+	$('#tab' + type).show();
+}
+
+function showMore(){
+	$('.comp_review').css('z-index', 10002);
+	$('.mask').fadeTo("fast", 0.7);
+}
+
+function closeMore(){
+	$('.comp_review').css('z-index', -1);
+	$('.mask').hide();
+}
+
+</script>
+</head>
+<body>
+<div style="display: none;">
+	<span class="selected_85 dummy"></span>
+</div>
+<div class="static_ani">
+</div>
+<div id="wrap" style="z-index:0">
+	<!-- Top Menu -->
+	<div id="topMenu1">
+		<img class="btn" src="../image/mark_close.png" onClick="menuToggle()"/>
+	</div>
+	<div id="topMenu2" style="position:fixed;top:0px;width:100%;z-index:200;display:none;">
+		<table width="100%" border="0" align="center" cellpadding="0" cellspacing="0" bgcolor="#483729">
+		  <tr>
+		    <td><div align="center"><a href="#"><img src="../image/mark_01.jpg" width="174" height="126" align="middle" /></a></div></td>
+		  </tr>
+		  <tr>
+		    <td align="center">
+			    <div class="topMenu_line"></div>
+		    </td>
+		  </tr>
+		  <tr>
+		    <td height="130" align="center">		    	
+		    	<table id="menuTbl" width="800" border="0" cellspacing="0" cellpadding="0">
+		      		<tr>
+				        <td width="91"><a href="shop_main.html"><img src="../image/menu_01_ov.jpg" width="91" height="107" class="top_btns on"/></a></td>
+				        <td>&nbsp;</td>
+				        <td width="91"><a href="store_main.html"><img src="../image/menu_02_nm.jpg" width="91" height="107" class="top_btns"/></a></td>
+				        <td>&nbsp;</td>
+				        <td width="91"><a href="biz_main.html"><img src="../image/menu_03_nm.jpg"  width="91" height="107" class="top_btns"/></a></td>
+				        <td>&nbsp;</td>
+				        <td width="91"><a href="community_main.html"><img src="../image/menu_04_nm.jpg" width="91" height="107" class="top_btns"/></a></td>
+			      </tr>
+		    	</table>
+		    </td>
+		  </tr>
+		  <tr>
+		    <td align="center">
+		    	<div class="topMenu_line"></div>
+		    </td>
+		  </tr>
+		  <tr>
+		    <td align="center">
+		    	<table width="1000"  border="0" cellpadding="0" cellspacing="0">
+		      		<tr>
+		        		<td height="55">
+		        			<div class="sub_menu" id="menu_dep2_0" style="display: none;">
+		        				<ul>
+		        					<li class="on"><a href="shop1.html">Tab Letter White</a></li>
+		        					<li><a href="shop2.html">Tab Letter Color</a></li>
+		        					<li><a href="shop3.html">365 Days Calendar</a></li>
+		        					<li><a href="shop4.html">Special Edition</a></li>
+		        					<li><a href="shop5.html">Baby</a></li>		        					
+		        					<li class="last"><a href="shop6.html">Wedding</a></li>
+		        				</ul>
+		        			</div>
+		        			<div class="sub_menu" id="menu_dep2_1"  >
+		        				<ul>
+		        					<li><a href="store_gallery.html">Store Gallery</a></li>
+		        					<li><a href="store_about.html">About Partner Store</a></li>
+		        					<li class="last"><a href="#">Contact Us</a></li>   					
+		        				</ul>
+		        			</div>
+		        			<div class="sub_menu" id="menu_dep2_2" style="display: none;">
+		        				<ul>
+		        					<li><a href="biz_gallery.html">Biz Gallery</a></li>
+		        					<li><a href="biz_about.html">About MTC</a></li>
+		        					<li><a href="#">How To Order</a></li>
+		        					<li class="last"><a href="#">Contact Us</a></li>		        					
+		        				</ul>
+		        			</div>
+		        			<div class="sub_menu" id="menu_dep2_3" style="display: none;">
+		        				<ul>
+		        					<li><a href="community_brand_story.html">Brand Story</a></li>
+		        					<li><a href="community_event_list.html">Event</a></li>
+		        					<li><a href="community_notice_list.html">Notice</a></li>
+		        					<li><a href="community_media_list.html">Media</a></li>
+		        					<li class="last"><a href="community_qna.html">Q&A</a></li>		        					
+		        				</ul>
+		        			</div>
+		        		</td>
+		      		</tr>
+		    	</table>
+		    </td>
+		  </tr>
+		  <tr>
+		    <td align="center">
+		    	<div class="topMenu_line"></div>
+		    </td>
+		  </tr>		  
+		  <tr>
+		    <td align="center" height="73"><table width="160" border="0" cellspacing="0" cellpadding="0">
+		      <tr>
+		        <td width="36"><img src="../image/bt_blog.jpg" width="36" height="36" /></td>
+		        <td>&nbsp;</td>
+		        <td width="36"><img src="../image/bt_face.jpg" width="36" height="36" /></td>
+		        <td>&nbsp;</td>
+		        <td width="36"><img src="../image/bt_tweet.jpg" width="36" height="36" /></td>
+		      </tr>
+		    </table></td>
+		  </tr>
+		  <tr>
+		    <td>&nbsp;</td>
+		  </tr>
+		</table>
+		<table width="100%" border="0" cellspacing="0" cellpadding="0">
+		  <tr>
+		    <td valign="top" style="width:250; height:250; background-image: url(../image/gnb_sdw.png) ; background-repeat:repeat-x">&nbsp;</td>
+		    <td width="125" valign="top"><img class="btn" src="../image/gnb_close.png" width="125" height="37" onClick="menuToggle();"/></td>
+		    <td valign="top" style="width:250; height:250; background-image: url(../image/gnb_sdw.png) ; background-repeat:repeat-x">&nbsp;</td>
+		  </tr>
+		</table>
+	</div><!-- topMenu2 -->
+	
+	<!-- 미리보기 -->
+	<div class="mask"></div>
+	<div class="comp_review">		
+		<div class="comp_review_title">
+			<img src="../image/shop/comp_review_close.png" alt="" onclick="closeMore()" class="rv_close"/>			
+		</div>
+		<div class="comp_slide_btn">
+			<img src="../image/shop/rv_slide_left.png" alt="" class="cslide_left"/>
+			<img src="../image/shop/rv_slide_right.png" alt="" class="cslide_right"/>
+		</div>
+		<div class="review_slide">
+			<ul class="review_slide_ul">
+				<li><img src="../image/shop/complete_review.png" /></li>
+				<li><img src="../image/shop/complete_review.png" /></li>
+				<li><img src="../image/shop/complete_review.png" /></li>
+				<li><img src="../image/shop/complete_review.png" /></li>
+				<li><img src="../image/shop/complete_review.png" /></li>
+			</ul>
+		</div>
+	</div><!-- comp_review -->
+	
+	<!-- 우측상단 링크 -->
+	<div class="top_sub_menu">
+		<a href="">로그인</a>
+		<a href=""> | </a>
+		<a href="">회원가입</a>
+		<a href=""> | </a>
+		<a href="">장바구니</a>
+		<a href=""> | </a>
+		<a href="">주문조회</a>
+		<a href=""> | </a>
+		<a href="">Q&A</a>
+	</div>
+	
+	<!-- 내용 -->
+	<div class="shop_white">
+		
+		<!-- 초콜릿선택 -->
+		<div class="choco_select">
+			<!-- 애니메이션 -->
+			<div class="sct_animation"></div>
+			
+			<div class="sct_full">
+				<div class="sct_left" align="right">
+					
+					<div class="choch_sct_bg">						
+					</div><!-- choch_sct_bg -->
+					
+					<div class="size_mm">
+						<img src="../image/shop/size_text2.png" alt="" />
+					</div>
+					<div class="select_btns">
+						<img src="../image/shop/back_btn.png" alt="뒤로가기" class="src_btn" onclick="history.back();"/>
+						<span>
+							<img src="../image/shop/reset_icon_off.png" alt="" class="cart_icon"/>
+							<span class="btn medium" onclick="chocoboxReset();">다시 선택</span>							
+						</span>
+						<span>
+							<img src="../image/shop/cart_icon_off.png" alt="" class="cart_icon"/>
+							<span class="btn medium" onclick="sct_complete();">선택 완료</span>							
+						</span>						
+					</div>
+				</div>
+				
+				<div class="sct_right" align="left">
+					<div class="sct_r_tabs">
+						<span class="btn bg1 on" onclick="tabChange(1)">알파벳&숫자</span>
+						<span class="btn bg1" onclick="tabChange(2)">작은 이미지</span>
+						<span class="btn bg1" onclick="tabChange(3)">큰 이미지</span>
+					</div>
+					<div class="sct_r_content" id="tab1">
+						<ul>
+							<li><img src="../image/shop/alphabet/a_view.png" /></li>
+							<li><img src="../image/shop/alphabet/a_view.png" /></li>
+							<li><img src="../image/shop/alphabet/a_view.png" /></li>
+							<li><img src="../image/shop/alphabet/a_view.png" /></li>
+							<li><img src="../image/shop/alphabet/a_view.png" /></li>
+							<li><img src="../image/shop/alphabet/a_view.png" /></li>
+							<li><img src="../image/shop/alphabet/a_view.png" /></li>
+							<li><img src="../image/shop/alphabet/a_view.png" /></li>
+							<li><img src="../image/shop/alphabet/a_view.png" /></li>
+							<li><img src="../image/shop/alphabet/a_view.png" /></li>
+							<li><img src="../image/shop/alphabet/a_view.png" /></li>
+							<li><img src="../image/shop/alphabet/a_view.png" /></li>
+							<li><img src="../image/shop/alphabet/a_view.png" /></li>
+							<li><img src="../image/shop/alphabet/a_view.png" /></li>
+							<li><img src="../image/shop/alphabet/a_view.png" /></li>
+						</ul>
+					</div>
+					
+					<div class="sct_r_content" id="tab2" style="display: none;">
+						<ul>
+							<li><img src="../image/shop/alphabet/a_view.png" /></li>
+							<li><img src="../image/shop/alphabet/a_view.png" /></li>
+							<li><img src="../image/shop/alphabet/a_view.png" /></li>
+							<li><img src="../image/shop/alphabet/a_view.png" /></li>
+							<li><img src="../image/shop/alphabet/a_view.png" /></li>
+							<li><img src="../image/shop/alphabet/a_view.png" /></li>
+							<li><img src="../image/shop/alphabet/a_view.png" /></li>
+							<li><img src="../image/shop/alphabet/a_view.png" /></li>
+							<li><img src="../image/shop/alphabet/a_view.png" /></li>
+							
+							<li><img src="../image/shop/alphabet/a_view.png" /></li>
+							<li><img src="../image/shop/alphabet/a_view.png" /></li>
+							<li><img src="../image/shop/alphabet/a_view.png" /></li>
+							<li><img src="../image/shop/alphabet/a_view.png" /></li>
+							<li><img src="../image/shop/alphabet/a_view.png" /></li>
+							<li><img src="../image/shop/alphabet/a_view.png" /></li>
+						</ul>
+					</div>
+					
+					<div class="sct_r_content" id="tab3" style="display: none;">
+						<ul>
+							<li><img src="../image/shop/bigimg/sample.png" /></li>
+							<li><img src="../image/shop/bigimg/sample.png" /></li>
+							<li><img src="../image/shop/bigimg/sample.png" /></li>
+							<li><img src="../image/shop/bigimg/sample.png" /></li>
+							<li><img src="../image/shop/bigimg/sample.png" /></li>
+							<li><img src="../image/shop/bigimg/sample.png" /></li>
+							<li><img src="../image/shop/bigimg/sample.png" /></li>
+							<li><img src="../image/shop/bigimg/sample.png" /></li>
+							<li><img src="../image/shop/bigimg/sample.png" /></li>
+							<li><img src="../image/shop/bigimg/sample.png" /></li>
+							<li><img src="../image/shop/bigimg/sample.png" /></li>
+							<li><img src="../image/shop/bigimg/sample.png" /></li>
+							<li><img src="../image/shop/bigimg/sample.png" /></li>
+							<li><img src="../image/shop/bigimg/sample.png" /></li>
+							
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- 초콜릿 선택완료 -->
+		<div class="choco_select_complete">
+			<div class="prices">
+				<ul>
+					<li>
+						<h4>Tab Letter White 16</h4>
+						<h4>\24,000</h4>
+					</li>
+					<li>
+						<h6>수량</h6>
+						<span class="p_txt">
+							<input class="prod_count" name="" value="0"/> 개
+						</span> 						
+					</li>
+					<li>
+						<h6>옵션</h6>
+						<span class="p_txt">쇼핑백</span>
+						<input class="opt_count" name="" value="0"/>
+						<span class="sm_price">\1,000 <img src="../image/shop/price_del.png" class="opt_del"/></span>						
+					</li>
+					<li>
+						<h6>배송료</h6>
+						<span class="p_txt">2.500원</span>
+					</li>
+					<li>
+						<h6>적립금</h6>
+						<span class="p_txt">\ 160</span>
+					</li>
+					<li>
+						<h6>총상품 금액</h6>
+						<span class="p_txt2">\ 16,500</span>
+					</li>
+				</ul>
+				<div class="price_btns">
+					<div class="left">
+						<img src="../image/shop/back_btn.png" alt="BACK" class="src_btn" onclick="backToMaking();"/>
+						<img src="../image/shop/twit_btn.png" alt="twitter"  class="src_btn"/>
+						<img src="../image/shop/fb_btn.png" alt="facebook"  class="src_btn"/>
+					</div>
+					<div class="right">
+						<img src="../image/shop/cart_icon_off.png" alt="" class="cart_icon"/>
+						<span class="btn medium">장바구니 담기</span>						
+					</div>
+				</div>
+			</div>
+			<div class="options">
+				<h4>옵션선택</h4>
+				<div class="opt_list">
+					<ul>
+						<li><img src="../image/shop/option_icon.png" alt="" /><span>쇼핑백</span></li>
+					</ul>
+				</div>
+				
+			</div>
+			<div class="complete">
+				<div class="comp_img">
+					<img src="../image/shop/comp_4x4_img.png" alt="" />
+				</div>				
+			</div>
+			
+			
+		</div>
+		
+	</div>
+
+
+</div>
+</body>
+</html>
